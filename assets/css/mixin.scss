@@ -1,0 +1,36 @@
+@import './variables.scss';
+
+@mixin size($w, $h: $w) {
+  width: $w;
+  height: $h;
+}
+/*
+* 绝对居中
+* $center 
+*/
+@mixin absCenter($center: true) {
+  @if $center == true {
+    justify-content: center;
+  } @else {
+    justify-content: space-between;
+  }
+  display: flex;
+  align-items: center;
+}
+
+// 文字溢出点点点
+@mixin ellipsis($row:1) {
+  @if $row == 1 {
+    @extend %ellipsis-basic;
+    white-space: nowrap;
+  }@else {
+    @extend %ellipsis-basic;
+    display: -webkit-box;
+    -webkit-line-clamp: $row;
+    -webkit-box-orient: vertical;
+  }
+  %ellipsis-basic{
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

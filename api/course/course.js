@@ -1,4 +1,4 @@
-import axios from '@/config/axios'
+import axios from '~/config/axios'
 
 // 获取课程列表
 export const apiCourseLists = (params = {}) => {

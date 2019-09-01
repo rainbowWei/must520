@@ -19,12 +19,17 @@
   },
   "devDependencies": {
     "css-loader": "^3.2.0",
-    "mockjs": "^1.0.1-beta3",
     "node-sass": "^4.12.0",
     "nodemon": "^1.18.9",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.0",
     "sass-resources-loader": "^2.0.1",
     "style-loader": "^1.0.0"
+  },
+  "config": {
+    "nuxt": {
+      "host": "localhost",
+      "port": 4000
+    }
   }
 }

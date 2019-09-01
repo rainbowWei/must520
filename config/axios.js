@@ -20,7 +20,11 @@ instance.interceptors.request.use(function (conf) {
       conf.params = {}
     }
     conf.params[`_t`] = Date.now()
-    
+    Object.keys(conf.params).forEach(key => {
+      if (!conf.params[key] && conf.params[key] !== 0) {
+        Reflect.deleteProperty(conf.params, key)
+      }
+    })
     const search = Object.keys(conf.params).map(key => {
       return `${key}=${conf.params[key]}`
     }).join('&')

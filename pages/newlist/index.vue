@@ -52,6 +52,7 @@ export default {
       this.activeKey = key
       this.handleGetNewsArticle(key, 1)
     },
+    //渲染新闻分类
     handleGetNewsList() {
       getNewsList()
         .then(res => {
@@ -63,6 +64,7 @@ export default {
           throw new Error(err, "|||")
         });
     },
+    //获取并渲染新闻列表数据
     handleGetNewsArticle(id, page) {
       getNewsArticle({
         cateid: id,

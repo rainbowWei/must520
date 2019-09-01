@@ -1,5 +1,6 @@
 <template>
   <div class="courselist">
+    vue2.index.jsx
     <ul>
       <li v-for="(course, index) in courseLists" :key="index">
         {{course.title}}

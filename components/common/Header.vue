@@ -1,31 +1,62 @@
 <template>
   <div class="xxw-header">
-    <r-logo />
-    <ul class="nav">
-      <li v-for="catalogue in catalogues" :key="catalogue.toUrl">
-        <nuxt-link :to="catalogue.toUrl">{{catalogue.title}}</nuxt-link>
-      </li>
-    </ul>
-    <r-user-avatar />
+    <div class="slogo clearfix">
+      <div class="content">
+        <div class="slogoL fl">自闭症康复训练技术——MUST引导行为，行为改变命运</div>
+         <r-user-avatar />
+      </div>
+    </div>
+    <div class="headerLogo">
+      <div class="content">
+        <div class="logo fl">
+          <a href="/">
+            <img src="@/assets/img/logo.png" alt="" >
+          </a>
+      </div>
+        <div class="search fl">
+          <input type="text" name="" id="">
+          <p>资格考试  MUST专家  杜佳楣  认证课程</p>
+          <a href="javascript:" class="searchsumit"></a>
+        </div>
+        <div class="contact fl">
+          <a href="tel:010-52668752">
+            <span></span>
+            <p>010-52668752</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="nav">
+      <ul class="navcontent">
+        <li v-for="catalogue in catalogues" :key="catalogue.toUrl">
+          <nuxt-link :to="catalogue.toUrl">{{catalogue.title}}</nuxt-link>
+        </li>
+      </ul>
+    </div>
+   
   </div>
 </template>
 
 <script>
-import RLogo from '@/components/common/Logo.vue';
 import RUserAvatar from '@/components/common/UserAvatar.vue';
 
 export default {
   name: 'Header',
   components: {
-    RLogo,
     RUserAvatar
   },
   data() {
     return {
       catalogues: [
         { toUrl: '/', title: '首页'},
-        { toUrl: '/courselist', title: '课程列表'},
-        { toUrl: '/newlist', title: '新闻列表'}
+        { toUrl: '/courselist', title: '课程认证'},
+        { toUrl: '/newlist', title: '资格考试'},
+        { toUrl: '/newlist', title: 'MUST人才库'},
+        { toUrl: '/newlist', title: '视频中心'},
+        { toUrl: '/newlist', title: '新闻资讯'},
+        { toUrl: '/newlist', title: '合作加盟'},
+        { toUrl: '/newlist', title: '关于MUST'},
       ]
     }
   }
@@ -34,19 +65,96 @@ export default {
 
 <style lang="scss" scoped>
   .xxw-header {
-    @include absCenter(false);
-    background: $primary-color;
-    padding: 8px;
     .nav {
-      @include absCenter(false);
+      width: 100%;
+      background: #01072a;
+      .navcontent{
+        padding: 0 12px;
+        width: 1176px;
+        margin: 0 auto;
+        @include absCenter(false);
+      }
       li {
-        margin: 0 5px;
+          font-size: 18px;
+          line-height: 40px;
+          color: #fff;
         &:hover {
-          background: $primary-color;
+          color: $primary-color;
         }
       }
     }
   }
+.content{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+  .slogo{
+  background: #f4f4f4;
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  font-size: 18px;
+  .RegisterLogin{
+    width: 165px;
+    text-align: center;
+  }
+}
+.headerLogo{
+  width: 100%;
+  height: 120px;
+  .logo{
+    width: 216px;
+    height: 85px;
+    margin-top: 20px;
+    img{
+      width:100%;
+      height: 100%;
+    }
+  }
+  .search{
+    width: 428px;
+    margin:38px 140px 0 170px;
+    position: relative;
+    input{
+      width: 390px;
+      height: 38px;
+      border:1px solid #ef8200;
+      border-radius: 4px;
+    }
+    p{
+      color: #aaaaa9;
+      margin-top: 8px;
+    }
+    .searchsumit{
+      width: 60px;
+      height: 61px;
+      @include imgurl("/sprite.png");
+      background-position: -297px -34px;
+      position: absolute;
+      top:-10px;
+      right: -10px;
+    }
+  }
+  .contact{
+    font-size: 24px;
+    font-weight: bold;
+    position: relative;
+    span{
+      width: 32px;
+      height: 32px;
+      position: absolute;
+      left: 0;
+      top:45px;
+      @include imgurl("/sprite.png");
+      background-position: -386px -49px;
+    }
+    p{
+      line-height: 120px;
+      text-indent: 42px;
+      color: #ef8200;
+    }
+  }
+}
 </style>
 
 

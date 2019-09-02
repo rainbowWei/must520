@@ -173,6 +173,7 @@ export default {
 .course {
   max-width: 1200px;
   margin: 0 auto;
+  padding-bottom: 50px;
   h3 {
     height: 41px;
     line-height: 41px;

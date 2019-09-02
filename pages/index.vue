@@ -21,15 +21,15 @@
       <p>图标OK</p>
       <r-icon name="el-icon-arrow-right" size="16" />
     </div>
-    <r-logo />
+    <!-- <r-logo /> -->
   </div>
 </template>
 
 <script>
-import RLogo from '@/components/common/Logo'
+// import RLogo from '@/components/common/Logo'
 export default {
   components: {
-    RLogo,
+    // RLogo,
   },
   head: {
     title: '首页',

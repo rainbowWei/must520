@@ -2,15 +2,18 @@
   <div>
     <r-header />
     <nuxt />
+    <r-footer />
   </div>
 </template>
 
 <script>
 import RHeader from '@/components/common/Header';
+import RFooter from '@/components/common/Footer';
 
 export default {
   components: {
-    RHeader
+    RHeader,
+    RFooter
   }
 }
 </script>

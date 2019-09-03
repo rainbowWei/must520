@@ -3,18 +3,18 @@
     <div class="slogo clearfix">
       <div class="content">
         <div class="slogoL fl">自闭症康复训练技术——MUST引导行为，行为改变命运</div>
-        <r-user-avatar />
+        <r-user-avatar/>
       </div>
     </div>
     <div class="headerLogo">
       <div class="content">
         <div class="logo fl">
           <a href="/">
-            <img src="@/assets/img/logo.png" alt />
+            <img src="@/assets/img/logo.png" alt="">
           </a>
         </div>
         <div class="search fl">
-          <input type="text" name id />
+          <input type="text" name="" id="">
           <p>资格考试 MUST专家 杜佳楣 认证课程</p>
           <a href="javascript:" class="searchsumit"></a>
         </div>
@@ -26,14 +26,13 @@
         </div>
       </div>
     </div>
-
     <div class="nav">
       <ul class="navcontent">
         <li
           v-for="catalogue in catalogues"
           :key="catalogue.toUrl"
           :class="navIndex == catalogue.index ? 'active' : ''"
-           @click="()=>handleTabNav(catalogue.index)"
+          @click="()=>handleTabNav(catalogue.index)"
         >
           <nuxt-link :to="catalogue.toUrl">{{catalogue.title}}</nuxt-link>
         </li>
@@ -44,7 +43,16 @@
 
 <script>
 import RUserAvatar from "@/components/common/UserAvatar.vue";
-
+const catalogues = [
+  { toUrl: "/", title: "首页", index: 0 },
+  { toUrl: "/courselist", title: "课程认证", index: 1 },
+  { toUrl: "/exam", title: "资格考试", index: 2 },
+  { toUrl: "/talentlist", title: "MUST人才库", index: 3 },
+  { toUrl: "/videocenter", title: "视频中心", index: 4 },
+  { toUrl: "/newlist", title: "新闻资讯", index: 5 },
+  { toUrl: "/cooperate", title: "合作加盟", index: 6 },
+  { toUrl: "/about", title: "关于MUST", index: 7 }
+];
 export default {
   name: "Header",
   components: {
@@ -52,23 +60,27 @@ export default {
   },
   data() {
     return {
-      catalogues: [
-        { toUrl: "/", title: "首页", index: 0 },
-        { toUrl: "/courselist", title: "课程认证", index: 1 },
-        { toUrl: "/exam", title: "资格考试", index: 2 },
-        { toUrl: "/talentlist", title: "MUST人才库", index: 3 },
-        { toUrl: "/videocenter", title: "视频中心", index: 4 },
-        { toUrl: "/newlist", title: "新闻资讯", index: 5 },
-        { toUrl: "/cooperate", title: "合作加盟", index: 6 },
-        { toUrl: "/about", title: "关于MUST", index: 7 }
-      ],
-      navIndex: 0
+      catalogues,
+      navIndex: -1,   // 目的是给一个存在的默认值时, 会出现闪动一下
     };
   },
+  created() {
+    if (process.browser) {
+      this.navIndex = window.localStorage.getItem('navIndex') || 0
+    }
+  },
+  destroyed() {
+    if (process.browser) {
+      window.localStorage.removeItem('navIndex')
+    }
+  },
   methods: {
-     // 切换导航
-    handleTabNav(navindex) {
-      this.navIndex = navindex;
+    // 切换导航
+    handleTabNav(navIndex) {
+      this.navIndex = navIndex;
+      if (process.browser) {
+        window.localStorage.setItem('navIndex', navIndex)
+      }
     }
   }
 };

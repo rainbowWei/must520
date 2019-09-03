@@ -3,19 +3,19 @@
     <div class="slogo clearfix">
       <div class="content">
         <div class="slogoL fl">自闭症康复训练技术——MUST引导行为，行为改变命运</div>
-         <r-user-avatar />
+        <r-user-avatar />
       </div>
     </div>
     <div class="headerLogo">
       <div class="content">
         <div class="logo fl">
           <a href="/">
-            <img src="@/assets/img/logo.png" alt="" >
+            <img src="@/assets/img/logo.png" alt />
           </a>
-      </div>
+        </div>
         <div class="search fl">
-          <input type="text" name="" id="">
-          <p>资格考试  MUST专家  杜佳楣  认证课程</p>
+          <input type="text" name id />
+          <p>资格考试 MUST专家 杜佳楣 认证课程</p>
           <a href="javascript:" class="searchsumit"></a>
         </div>
         <div class="contact fl">
@@ -26,129 +26,143 @@
         </div>
       </div>
     </div>
-    
+
     <div class="nav">
       <ul class="navcontent">
-        <li v-for="catalogue in catalogues" :key="catalogue.toUrl">
+        <li
+          v-for="catalogue in catalogues"
+          :key="catalogue.toUrl"
+          :class="navIndex == catalogue.index ? 'active' : ''"
+           @click="()=>handleTabNav(catalogue.index)"
+        >
           <nuxt-link :to="catalogue.toUrl">{{catalogue.title}}</nuxt-link>
         </li>
       </ul>
     </div>
-   
   </div>
 </template>
 
 <script>
-import RUserAvatar from '@/components/common/UserAvatar.vue';
+import RUserAvatar from "@/components/common/UserAvatar.vue";
 
 export default {
-  name: 'Header',
+  name: "Header",
   components: {
     RUserAvatar
   },
   data() {
     return {
       catalogues: [
-        { toUrl: '/', title: '首页'},
-        { toUrl: '/courselist', title: '课程认证'},
-        { toUrl: '/newlist', title: '资格考试'},
-        { toUrl: '/newlist', title: 'MUST人才库'},
-        { toUrl: '/newlist', title: '视频中心'},
-        { toUrl: '/newlist', title: '新闻资讯'},
-        { toUrl: '/newlist', title: '合作加盟'},
-        { toUrl: '/newlist', title: '关于MUST'},
-      ]
+        { toUrl: "/", title: "首页", index: 0 },
+        { toUrl: "/courselist", title: "课程认证", index: 1 },
+        { toUrl: "/exam", title: "资格考试", index: 2 },
+        { toUrl: "/talentlist", title: "MUST人才库", index: 3 },
+        { toUrl: "/videocenter", title: "视频中心", index: 4 },
+        { toUrl: "/newlist", title: "新闻资讯", index: 5 },
+        { toUrl: "/cooperate", title: "合作加盟", index: 6 },
+        { toUrl: "/about", title: "关于MUST", index: 7 }
+      ],
+      navIndex: 0
+    };
+  },
+  methods: {
+     // 切换导航
+    handleTabNav(navindex) {
+      this.navIndex = navindex;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-  .xxw-header {
-    .nav {
-      width: 100%;
-      background: #01072a;
-      .navcontent{
-        padding: 0 12px;
-        width: 1176px;
-        margin: 0 auto;
-        @include absCenter(false);
+.xxw-header {
+  .nav {
+    width: 100%;
+    background: #01072a;
+    .navcontent {
+      padding: 0 12px;
+      width: 1176px;
+      margin: 0 auto;
+      @include absCenter(false);
+    }
+    li {
+      font-size: 18px;
+      line-height: 40px;
+      color: #fff;
+      &:hover {
+        color: $primary-color;
       }
-      li {
-          font-size: 18px;
-          line-height: 40px;
-          color: #fff;
-        &:hover {
-          color: $primary-color;
-        }
+      &.active {
+        color: $primary-color;
       }
     }
   }
-.content{
+}
+.content {
   max-width: 1200px;
   margin: 0 auto;
 }
-  .slogo{
+.slogo {
   background: #f4f4f4;
   height: 40px;
   line-height: 40px;
   width: 100%;
   font-size: 18px;
-  .RegisterLogin{
+  .RegisterLogin {
     width: 165px;
     text-align: center;
   }
 }
-.headerLogo{
+.headerLogo {
   width: 100%;
   height: 120px;
-  .logo{
+  .logo {
     width: 216px;
     height: 85px;
     margin-top: 20px;
-    img{
-      width:100%;
+    img {
+      width: 100%;
       height: 100%;
     }
   }
-  .search{
+  .search {
     width: 428px;
-    margin:38px 140px 0 170px;
+    margin: 38px 140px 0 170px;
     position: relative;
-    input{
+    input {
       width: 390px;
       height: 38px;
-      border:1px solid #ef8200;
+      border: 1px solid #ef8200;
       border-radius: 4px;
     }
-    p{
+    p {
       color: #aaaaa9;
       margin-top: 8px;
     }
-    .searchsumit{
+    .searchsumit {
       width: 60px;
       height: 61px;
       @include imgurl("/sprite.png");
       background-position: -297px -34px;
       position: absolute;
-      top:-10px;
+      top: -10px;
       right: -10px;
     }
   }
-  .contact{
+  .contact {
     font-size: 24px;
     font-weight: bold;
     position: relative;
-    span{
+    span {
       width: 32px;
       height: 32px;
       position: absolute;
       left: 0;
-      top:45px;
+      top: 45px;
       @include imgurl("/sprite.png");
       background-position: -386px -49px;
     }
-    p{
+    p {
       line-height: 120px;
       text-indent: 42px;
       color: #ef8200;

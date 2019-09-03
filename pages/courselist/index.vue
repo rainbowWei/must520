@@ -2,7 +2,7 @@
   <div>
     <div class="self-carousel">
       <el-carousel class="carousel" :interval="2000" arrow="always" :autoplay="true">
-        <el-carousel-item class="xxxx" v-for="item in courseclassify" :key="item.id">
+        <el-carousel-item class="xxxx" v-for="item in courseclassifies" :key="item.id">
           <h3>{{ item.cate_name }}</h3>
         </el-carousel-item>
       </el-carousel>
@@ -23,34 +23,34 @@
       <ul class="course-classify">
         <span>课程分类：</span>
         <li
-          v-for="item in courseclassify"
-          :key="item.id"
-          :class="courseclassifyIndex==item.id ? 'active' : '' "
-          @click="()=>handleTabClassify(item.id)"
-        >{{item.cate_name}}</li>
+          v-for="courseclassif in courseclassifies"
+          :key="courseclassif.id"
+          :class="courseclassifyIndex==courseclassif.id ? 'active' : '' "
+          @click="()=>handleTabClassify(courseclassif.id)"
+        >{{courseclassif.cate_name}}</li>
       </ul>
       <ul class="course-list">
-        <li v-for="item in newsCourseList" :key="item.id">
-          <nuxt-link :to="`/courseList/index2`">
+        <li v-for="newcourse in newsCourseList" :key="newcourse.id">
+          <nuxt-link :to="`/courseList/detail/${newcourse.id}`">
             <div class="course-img">
-              <img :src="item.cover" alt="">
+              <img :src="newcourse.cover" alt="">
             </div>
             <div class="course-con">
-              <div class="course-title">{{item.course_name}}</div>
+              <div class="course-title">{{newcourse.course_name}}</div>
               <div class="synopsis">
                 <span>课程简介：</span>
-                {{item.intro}}
+                {{newcourse.intro}}
               </div>
               <div class="course-bottom">
                 <div class="speaker">
                   <span>主讲人：</span>
-                  {{item.teachername}}
+                  {{newcourse.teachername}}
                 </div>
                 <div class="duration">
                   <span>课程时长：</span>
-                  {{item.totlatime}}
+                  {{newcourse.totlatime}}
                 </div>
-                <div class="price">￥{{item.price}}</div>
+                <div class="price">￥{{newcourse.price}}</div>
               </div>
             </div>
           </nuxt-link>
@@ -82,7 +82,7 @@ import { getCourseClassify, getCourseLists } from "@/api/course/course";
 export default {
   data() {
     return {
-      courseclassify: [], //课程分类列表
+      courseclassifies: [], //课程分类列表
       courseList: [], //课程列表数据
       indicatorIndex: 0, // 走马灯当前活动的banner下标
       courseclassifyIndex: "", // 课程分类当前活动的下标
@@ -119,16 +119,16 @@ export default {
     handleGetCourseClassify() {
       getCourseClassify().then(res => {
         if (res.data) {
-          const courseclassify = [].concat(res.data);
+          const courseclassifies = [].concat(res.data);
           // const  courseclassify = Object.assign([],res.data)
-          courseclassify.push({
+          courseclassifies.push({
             id: "",
             cate_name: "全部课程",
             sort: 0,
             status: "2",
             updated_at: null
           });
-          this.courseclassify = courseclassify;
+          this.courseclassifies = courseclassifies;
         }
       });
     },

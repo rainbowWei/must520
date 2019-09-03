@@ -88,7 +88,7 @@ export default {
     }
     .links{
       width: 1180px;
-      height: 230px;
+      height: 260px;
       padding: 40px 0 0 20px;
       .linksL{
         height: 100%;
@@ -128,8 +128,7 @@ export default {
   height: 50px;
   background: #000;
   color: #b6b6b7;
-  text-align: center;
-  line-height: 50px;
+  @include absCenter();
 }
 </style>   
 

@@ -31,8 +31,8 @@
         <li
           v-for="catalogue in catalogues"
           :key="catalogue.toUrl"
-          :class="navIndex == catalogue.index ? 'active' : ''"
-          @click="()=>handleTabNav(catalogue.index)"
+          :class="url == catalogue.toUrl ? 'active' : ''"
+          @click="()=>getUrl(catalogue.toUrl)"
         >
           <nuxt-link :to="catalogue.toUrl">{{catalogue.title}}</nuxt-link>
         </li>
@@ -44,14 +44,14 @@
 <script>
 import RUserAvatar from "@/components/common/UserAvatar.vue";
 const catalogues = [
-  { toUrl: "/", title: "首页", index: 0 },
-  { toUrl: "/courselist", title: "课程认证", index: 1 },
-  { toUrl: "/exam", title: "资格考试", index: 2 },
-  { toUrl: "/talentlist", title: "MUST人才库", index: 3 },
-  { toUrl: "/videocenter", title: "视频中心", index: 4 },
-  { toUrl: "/newlist", title: "新闻资讯", index: 5 },
-  { toUrl: "/cooperate", title: "合作加盟", index: 6 },
-  { toUrl: "/about", title: "关于MUST", index: 7 }
+  { toUrl: "/", title: "首页" },
+  { toUrl: "/courselist", title: "课程认证"},
+  { toUrl: "/exam", title: "资格考试"},
+  { toUrl: "/talentlist", title: "MUST人才库" },
+  { toUrl: "/videocenter", title: "视频中心" },
+  { toUrl: "/newlist", title: "新闻资讯" },
+  { toUrl: "/cooperate", title: "合作加盟"},
+  { toUrl: "/about", title: "关于MUST" }
 ];
 export default {
   name: "Header",
@@ -61,25 +61,30 @@ export default {
   data() {
     return {
       catalogues,
-      navIndex: -1,   // 目的是给一个存在的默认值时, 会出现闪动一下
+      url: ''
     };
   },
   created() {
     if (process.browser) {
-      this.navIndex = window.localStorage.getItem('navIndex') || 0
+      this.getQueryString(this.url)
+      this.url = window.localStorage.getItem('url') || '/'
     }
   },
-  destroyed() {
-    if (process.browser) {
-      window.localStorage.removeItem('navIndex')
-    }
-  },
+  // destroyed() {
+  //   if (process.browser) {
+  //     window.localStorage.removeItem('url')
+  //   }
+  // },
   methods: {
+    getQueryString(url) {
+      let qString = window.location.href;
+      qString =  qString.indexOf('url') == -1 ? qString :'';
+    },
     // 切换导航
-    handleTabNav(navIndex) {
-      this.navIndex = navIndex;
+    getUrl(url) {
+      this.url = url;
       if (process.browser) {
-        window.localStorage.setItem('navIndex', navIndex)
+        window.localStorage.setItem('url', url)
       }
     }
   }

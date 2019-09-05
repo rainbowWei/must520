@@ -275,24 +275,6 @@ export default {
     }
   }
 }
-.self-carousel {
-  .self-indicator {
-    @include absCenter();
-    margin-top: -25px;
-    position: relative;
-    z-index: 99;
-    li {
-      @include size(20px);
-      background: blue;
-      border-radius: 50%;
-      margin: 0 4px;
-      opacity: 0.4;
-      &.active {
-        opacity: 1;
-      }
-    }
-  }
-}
 
 .el-carousel__item h3 {
   color: #475669;

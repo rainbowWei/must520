@@ -1,6 +1,6 @@
 import axios from '@/config/axios'
 
-// 新闻列表
+// 新闻列表分类
 export const getNewsList = (params = {}) => axios({
   url: '/article/getarticlecate',
   method: 'get',

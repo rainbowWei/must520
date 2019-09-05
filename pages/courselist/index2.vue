@@ -7,6 +7,7 @@
         【￥{{course.price}}】
       </li>
     </ul>
+    
   </div>
 </template>
 
@@ -44,3 +45,6 @@ export default {
     padding: 12px;
   }
 </style>
+
+
+  

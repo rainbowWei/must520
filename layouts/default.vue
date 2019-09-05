@@ -3,17 +3,20 @@
     <r-header />
     <nuxt />
     <r-footer />
+    <r-float />
   </div>
 </template>
 
 <script>
 import RHeader from '@/components/common/Header';
 import RFooter from '@/components/common/Footer';
+import RFloat from '@/components/common/rightFloatWindow';
 
 export default {
   components: {
     RHeader,
-    RFooter
+    RFooter,
+    RFloat
   }
 }
 </script>

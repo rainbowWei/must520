@@ -1,6 +1,6 @@
 <template>
   <ul class="floatwindow" id="floatwindow">
-    <li class="contact"  @mouseover="changeActive()"  @mouseout="removeActive()">
+    <li class="contact">
       <div class="box">
         <div class="floatLeft">
           <div class="dianhua">
@@ -13,7 +13,7 @@
         </div>
       </div>
     </li>
-    <li class="telephone"  @mouseover="changeActive()" @mouseout="removeActive()">
+    <li class="telephone">
       <div class="box">
         <div class="floatLeft">
           <div class="phone">
@@ -23,7 +23,7 @@
         </div>
       </div>
     </li>
-    <li class="wechat"  @mouseover="changeActive()" @mouseout="removeActive()">
+    <li class="wechat">
       <div class="box">
         <div class="floatLeft">
           <div class="wc">
@@ -33,7 +33,7 @@
         </div>
       </div>
     </li>
-     <li class="complaint" @mouseover=" changeActive()" @mouseout="removeActive()">
+     <li class="complaint">
       <div class="box">
         <div class="floatLeft" >
           <div class="from">
@@ -62,12 +62,12 @@ export default {
     }
   },
   methods:{
-       changeActive(){
-          this.find('.floatLeft').addClass('active').siblings().removeClass('active');
-      },
-      removeActive(){
-          this.find('.floatLeft').removeClass('active');
-      }
+      //  changeActive(){
+      //     this.find('.floatLeft').addClass('active').siblings().removeClass('active');
+      // },
+      // removeActive(){
+      //     this.find('.floatLeft').removeClass('active');
+      // }
   }
 }
 </script>

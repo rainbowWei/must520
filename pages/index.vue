@@ -3,7 +3,7 @@
     <el-carousel class="carousel" :interval="2000" arrow="always" :autoplay="true" trigger="click">
       <el-carousel-item v-for="item in carousel" :key="item.src">
         <!-- <img :src="item.src" alt=""> -->
-        <img src="@/assets/img/banner2.jpg" alt />
+        <img src="@/assets/img/banner2.jpg" alt="">
       </el-carousel-item>
     </el-carousel>
     <!-- MUUST介绍 -->
@@ -51,49 +51,42 @@
         </ul>
       </div>
     </div>
-
     <!-- MUST优势 -->
     <div class="must-goodness">
       <h3>MUST优势</h3>
       <ul class="goodness-list">
         <li class="item1">
           <h3>实操性</h3>
-          <p>
-            50000+家长和康复师使用的
-            <br />实操技巧，即学即用
+          <p>50000+家长和康复师使用的
+            <br>实操技巧，即学即用
           </p>
         </li>
         <li class="item2">
           <h3>全面性</h3>
-          <p>
-            18个维度全面涵盖
-            <br />自闭症康复的各种方法技巧
+          <p>18个维度全面涵盖
+            <br>自闭症康复的各种方法技巧
           </p>
         </li>
         <li class="item3">
           <h3>有效性</h3>
-          <p>
-            96%的自闭症孩子接受
-            <br />MUST训练3个月内进步明显
+          <p>96%的自闭症孩子接受
+            <br>MUST训练3个月内进步明显
           </p>
         </li>
         <li class="item4">
           <h3>系统性</h3>
-          <p>
-            8个领域进行一体化综合培养
-            <br />包含评估与训练
+          <p>8个领域进行一体化综合培养
+            <br>包含评估与训练
           </p>
         </li>
         <li class="item5">
           <h3>实用性</h3>
-          <p>
-            5000多个案例实证过的方式
-            <br />具有很强的实用性
+          <p>5000多个案例实证过的方式
+            <br>具有很强的实用性
           </p>
         </li>
       </ul>
     </div>
-
     <!-- 培训、考试、认证 -->
     <div class="must-serve">
       <h3>MUST最权威的培训+考试+资格认证服务</h3>
@@ -104,12 +97,10 @@
             <i></i>教学针对性强：
           </dt>
           <dd>分为MUST康复师、督导和专家三个能力级别，有针对性的教学</dd>
-
           <dt>
             <i></i>课程内容精良：
           </dt>
           <dd>著名孤独症专家杜佳楣老师授课，多维度教学以确保教学质量</dd>
-
           <dt>
             <i></i>上课方式灵活：
           </dt>
@@ -121,12 +112,10 @@
             <i></i>报名包办：
           </dt>
           <dd>参加MUST培训者即可同步报名相对应的线上MUST资格认证考试</dd>
-
           <dt>
             <i></i>考前辅导：
           </dt>
           <dd>MUST考试专家组会针对报考者的各类问题进行有针对性的答疑辅导</dd>
-
           <dt>
             <i></i>考试方式：
           </dt>
@@ -138,12 +127,10 @@
             <i></i>提升水平：
           </dt>
           <dd>拿到MUST资格认证的康复教师和家长，教学水平将获得业内高度认可</dd>
-
           <dt>
             <i></i>促进就业：
           </dt>
           <dd>认证人才将被推荐到MUST人才库，获得更多的孤独症康复就业机会</dd>
-
           <dt>
             <i></i>职位推荐：
           </dt>
@@ -151,41 +138,30 @@
         </li>
       </ul>
     </div>
-
     <!-- 人才库 -->
     <div class="must-talent">
       <h3>MUST人才库</h3>
-      <div class="swiper-box">
-        <div class="must-talent2 swiper-container" id="mustTalent">
-          <div class="swiper-wrapper">
-            <div
-              class="swiper-slide swiper-item"
-              v-for="teacher in teacherlist"
-              :key="teacher.id"
-            >
-              <a :href="teacher.jumpUrl">
-                <div class="teacher-pho">
-                  <img :src="teacher.cover" alt="teacher desp" />
-                </div>
-                <div class="teacher-name">{{teacher.name}}</div>
-                <div class="teacher-address">
-                  <span>{{teacher.area}}</span>
-                  <strong>{{teacher.gradename}}</strong>
-                </div>
-              </a>
-            </div>
+      <div class="swiper-box" v-swiper:mySwiper="swiperOption" @someSwiperEvent="swiperCallback">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="teacher in teacherlist" :key="teacher.id">
+            <a :href="teacher.jumpUrl">
+              <div class="teacher-pho">
+                <img :src="teacher.cover" alt="teacher desp">
+              </div>
+              <div class="teacher-name">{{teacher.name}}</div>
+              <div class="teacher-address">
+                <span>{{teacher.area}}</span>
+                <strong>{{teacher.gradename}}</strong>
+              </div>
+            </a>
           </div>
-          <div class="swiper-pagination"></div>
         </div>
-        <div class="swiper-button-next" id="left"></div>
-        <div class="swiper-button-prev" id="right"></div>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
 <script>
-import 'swiper/dist/css/swiper.css';
 import { getTeacherList } from "@/api/home/home";
 import Swiper from "swiper";
 export default {
@@ -195,6 +171,11 @@ export default {
   },
   data() {
     return {
+      swiperOption: {
+        loop: true,
+        autoplay: true,
+        slidesPerView: 4
+      },
       carousel: [
         { src: "@/assets/img/banner.jpg" },
         { src: "@/assets/img/banner2.jpg" },
@@ -219,17 +200,20 @@ export default {
         }
       ],
       on: false,
-      teacherlist:[],   //人才库列表
+      teacherlist: [] //人才库列表
     };
   },
 
   mounted() {
-    this._initSwiper();
     this.handlegetTeacherList();
   },
   methods: {
+    // swiper 回调函数
+    swiperCallback(x) {
+      console.log(x, "=====xx");
+    },
     //选项卡切换
-    tabsSwitch: function(tabIndex) {
+    tabsSwitch(tabIndex) {
       var tabCardCollection = document.querySelectorAll(".tab-txt"),
         len = tabCardCollection.length;
 
@@ -241,42 +225,16 @@ export default {
       tabCardCollection[tabIndex].style.display = "block";
     },
 
-    //人才库轮播
-    _initSwiper() {
-      var mustTalent = document.getElementById("mustTalent");
-      var talnetSwiper = new Swiper(".swiper-container", {
-        direction: "horizontal",
-        loop: true, //循环
-        loopFillGroupWithBlank: true,
-        observer: true, //修改swiper自己或子元素时，自动初始化swiper
-        observeParents: true, //修改swiper的父元素时，自动初始化swiper
-        //使用分页器
-        paginationClickable: true,
-        pagination: {
-          el: ".swiper-pagination"
-        },
-        autoplay: {
-          disableOnInteraction: false //触碰后自动切换停止
-        }
-      });
-      mustTalent.onmouseenter = function() {
-        talnetSwiper.autoplay.stop();
-      };
-      mustTalent.onmouseleave = function() {
-        talnetSwiper.autoplay.start();
-      };
-      talnetSwiper.params.slidesPerView = 5;
-    },
     //渲染人才库数据
     handlegetTeacherList() {
-        getTeacherList().then(res => {
-          if (res.data) {
-            this.teacherlist = res.data.data;
-          }
-        });
-      },
+      getTeacherList().then(res => {
+        if (res.data) {
+          this.teacherlist = res.data.data;
+        }
+      });
     }
-  };
+  }
+};
 </script>
 <style lang="scss">
 .container .carousel {
@@ -525,7 +483,7 @@ export default {
   .must-talent2 {
     width: 1024px;
   }
-  .swiper-wrapper{
+  .swiper-wrapper {
     width: 100%;
     height: 100%;
   }

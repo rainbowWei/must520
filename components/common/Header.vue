@@ -34,7 +34,7 @@
           :class="url == catalogue.toUrl ? 'active' : ''"
           @click="()=>getUrl(catalogue.toUrl)"
         >
-          <nuxt-link :to="catalogue.toUrl">{{catalogue.title}}</nuxt-link>
+          <nuxt-link class="nuxt-link" :to="catalogue.toUrl">{{catalogue.title}}</nuxt-link>
         </li>
       </ul>
     </div>
@@ -45,12 +45,12 @@
 import RUserAvatar from "@/components/common/UserAvatar.vue";
 const catalogues = [
   { toUrl: "/", title: "首页" },
-  { toUrl: "/courselist", title: "课程认证"},
-  { toUrl: "/exam", title: "资格考试"},
+  { toUrl: "/courselist", title: "课程认证" },
+  { toUrl: "/exam", title: "资格考试" },
   { toUrl: "/talentlist", title: "MUST人才库" },
   { toUrl: "/videocenter", title: "视频中心" },
   { toUrl: "/newlist", title: "新闻资讯" },
-  { toUrl: "/cooperate", title: "合作加盟"},
+  { toUrl: "/cooperate", title: "合作加盟" },
   { toUrl: "/about", title: "关于MUST" }
 ];
 export default {
@@ -61,13 +61,14 @@ export default {
   data() {
     return {
       catalogues,
-      url: ''
+      url: ""
     };
   },
   created() {
     if (process.browser) {
-      this.getQueryString(this.url)
-      this.url = window.localStorage.getItem('url') || '/'
+      console.log(this.catalogues, "=======nav");
+      this.getQueryString(this.url);
+      this.url = window.localStorage.getItem("url") || "/";
     }
   },
   // destroyed() {
@@ -78,13 +79,13 @@ export default {
   methods: {
     getQueryString(url) {
       let qString = window.location.href;
-      qString =  qString.indexOf('url') == -1 ? qString :'';
+      qString = qString.indexOf("url") == -1 ? qString : "";
     },
     // 切换导航
     getUrl(url) {
       this.url = url;
       if (process.browser) {
-        window.localStorage.setItem('url', url)
+        window.localStorage.setItem("url", url);
       }
     }
   }
@@ -105,12 +106,17 @@ export default {
     li {
       font-size: 18px;
       line-height: 40px;
-      color: #fff;
-      &:hover {
-        color: $primary-color;
-      }
-      &.active {
-        color: $primary-color;
+      .nuxt-link {
+        color: #fff;
+        display: inline-block;
+        @include size(100%);
+        
+        &:hover {
+          color: $primary-color;
+        }
+        &.active {
+          color: $primary-color;
+        }
       }
     }
   }
@@ -149,7 +155,7 @@ export default {
     input {
       width: 390px;
       height: 38px;
-      border: 1px solid #ef8200;
+      border: 1px solid $primary-color;
       border-radius: 4px;
     }
     p {
@@ -182,7 +188,7 @@ export default {
     p {
       line-height: 120px;
       text-indent: 42px;
-      color: #ef8200;
+      color: $primary-color;
     }
   }
 }

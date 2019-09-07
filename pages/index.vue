@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <el-carousel class="carousel" :interval="2000" arrow="always" :autoplay="true">
-      <el-carousel-item class="xxxx" v-for="item in carousel" :key="item.src">
+    <el-carousel class="carousel" :interval="2000" arrow="always" :autoplay="true" trigger="click">
+      <el-carousel-item v-for="item in carousel" :key="item.src">
         <!-- <img :src="item.src" alt=""> -->
         <img src="@/assets/img/banner2.jpg" alt />
       </el-carousel-item>
@@ -321,7 +321,7 @@ export default {
     .tab-content {
       width: 700px;
       height: 278px;
-      box-shadow: 9px 0 #ef8200, -9px 0 #ef8200;
+      box-shadow: 9px 0 $primary-color, -9px 0 $primary-color;
       border-radius: 8px;
       border: 1px solid #000;
       .tab-txt {
@@ -335,7 +335,7 @@ export default {
         text-align: center;
         line-height: 278px;
         font-size: 181px;
-        color: #ef8200;
+        color: $primary-color;
       }
       .tab-conR {
         width: 426px;
@@ -365,8 +365,8 @@ export default {
         }
       }
       .on {
-        background: #ef8200;
-        border-color: #ef8200;
+        background: $primary-color;
+        border-color: $primary-color;
         color: #fff;
       }
     }
@@ -430,7 +430,7 @@ export default {
   width: 100%;
   height: 560px;
   padding-top: 40px;
-  background: #ef8200;
+  background: $primary-color;
   h3 {
     font-size: 34px;
     font-weight: bold;

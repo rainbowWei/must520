@@ -74,6 +74,7 @@ export default {
   },
   methods: {
     getQueryString() {
+      // const reg = /^http(?:s)?:\/\/.+(?:\.com|cn|net)(?:(\/.+)*)$/g;
       const reg = /^http(?:s)?:\/\/.+(?:\.com|cn|net)(?:(\/.+)*)$/g;
       const result = reg.exec(window.location.href);
       const path = result ? `/${result[1].split('/')[1]}` : '/';

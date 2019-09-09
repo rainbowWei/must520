@@ -17,7 +17,7 @@
         </div>
       </div>
     </li>
-    <li self-key="telephone">
+    <li self-key="telephone"  @mouseover="(e) => handleMouseOver(e)" @mouseout="(e) => handleMouseOut(e)">
       <div class="box">
         <div :class="activeLi === 'telephone' ? 'active' : ''" class="floatLeft">
           <div class="phone">
@@ -29,21 +29,21 @@
         </div>
       </div>
     </li>
-    <li self-key="wechat">
+    <li self-key="wechat"  @mouseover="(e) => handleMouseOver(e)" @mouseout="(e) => handleMouseOut(e)">
       <div class="box">
         <div :class="activeLi === 'wechat' ? 'active' : ''" class="floatLeft">
           <div class="wc">
             <div class="title">
               <span></span>官方微信
             </div>
-            <img class="ewm" src="" alt="">
+            <img class="ewm" src="@/assets/img/ewm.png" alt="">
           </div>
         </div>
       </div>
     </li>
-    <li self-key="complaint">
+    <li self-key="complaint"  @mouseover="(e) => handleMouseOver(e)" @mouseout="(e) => handleMouseOut(e)">
       <div class="box">
-        <div :class="activeLi === 'complaint' ? 'active' : ''" class="floatLeft">
+        <div :class="activeLi === 'complaint' ? 'active' : ''" class="floatLeft" >
           <div class="from">
             <div class="title">
               <span></span>投诉建议
@@ -109,7 +109,7 @@ export default {
       color: #888;
       margin-right: -180px;
       transition: margin-right 0.3s;
-      width: 160px;
+      width: 176px;
       padding: 15px 8px 8px 8px;
       background: #fff;
       box-shadow: 2px 2px 6px #888;
@@ -198,8 +198,7 @@ export default {
           border-radius: 4px;
           margin-top: 5px;
           input {
-            width: 75px;
-            height: 100%;
+            width: 100%;
           }
         }
         .suggest {

@@ -4,10 +4,8 @@ import courseFunc from './course'
 
 Vue.use(Vuex)
 
-const course = courseFunc();
-export default () => new Vuex.Store({
+export default  () => new Vuex.Store({
   modules: {
-    course,
+    course: courseFunc(),
   }
 })
-

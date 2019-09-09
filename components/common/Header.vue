@@ -31,7 +31,7 @@
         <li
           v-for="catalogue in catalogues"
           :key="catalogue.toUrl"
-          :class="url == catalogue.toUrl ? 'active' : ''"
+          :class="path === catalogue.toUrl ? 'active' : ''"
           @click="()=>getUrl(catalogue.toUrl)"
         >
           <nuxt-link class="nuxt-link" :to="catalogue.toUrl">{{catalogue.title}}</nuxt-link>
@@ -42,51 +42,48 @@
 </template>
 
 <script>
-import RUserAvatar from "@/components/common/UserAvatar.vue";
+import RUserAvatar from '@/components/common/UserAvatar.vue';
+import { typevalue } from '@/config/utils';
+
 const catalogues = [
-  { toUrl: "/", title: "首页" },
-  { toUrl: "/courselist", title: "课程认证" },
-  { toUrl: "/exam", title: "资格考试" },
-  { toUrl: "/talentlist", title: "MUST人才库" },
-  { toUrl: "/videocenter", title: "视频中心" },
-  { toUrl: "/newlist", title: "新闻资讯" },
-  { toUrl: "/cooperate", title: "合作加盟" },
-  { toUrl: "/about", title: "关于MUST" }
+  { toUrl: '/', title: '首页' },
+  { toUrl: '/courselist', title: '课程认证' },
+  { toUrl: '/exam', title: '资格考试' },
+  { toUrl: '/talentlist', title: 'MUST人才库' },
+  { toUrl: '/videocenter', title: '视频中心' },
+  { toUrl: '/newlist', title: '新闻资讯' },
+  { toUrl: '/cooperate', title: '合作加盟' },
+  { toUrl: '/about', title: '关于MUST' }
 ];
 export default {
-  name: "Header",
+  name: 'Header',
   components: {
     RUserAvatar
   },
   data() {
     return {
       catalogues,
-      url: ""
+      path: '/'
     };
   },
   created() {
     if (process.browser) {
-      console.log(this.catalogues, "=======nav");
-      this.getQueryString(this.url);
-      this.url = window.localStorage.getItem("url") || "/";
+      this.path = this.getQueryString();
+      console.log(this.catalogues, '=======nav', this.path);
     }
   },
-  // destroyed() {
-  //   if (process.browser) {
-  //     window.localStorage.removeItem('url')
-  //   }
-  // },
   methods: {
-    getQueryString(url) {
-      let qString = window.location.href;
-      qString = qString.indexOf("url") == -1 ? qString : "";
+    getQueryString() {
+      const reg = /^http(?:s)?:\/\/.+(?:\.com|cn|net)(?:(\/.+)*)$/g;
+      const result = reg.exec(window.location.href);
+      const path = result ? `/${result[1].split('/')[1]}` : '/';
+
+      // filter find includes
+      const catalogue = catalogues.find(catalogue => catalogue.toUrl === path);
+      return catalogue ? catalogue.toUrl : '';
     },
-    // 切换导航
-    getUrl(url) {
-      this.url = url;
-      if (process.browser) {
-        window.localStorage.setItem("url", url);
-      }
+    getUrl(path) {
+      this.path = path;
     }
   }
 };
@@ -111,13 +108,17 @@ export default {
         display: inline-block;
         @include size(100%);
         
+      }
         &:hover {
-          color: $primary-color;
+          .nuxt-link {
+            color: $primary-color;
+          }
         }
         &.active {
-          color: $primary-color;
+          .nuxt-link {
+            color: $primary-color
+          }
         }
-      }
     }
   }
 }

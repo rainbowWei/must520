@@ -141,7 +141,7 @@
     <!-- 人才库 -->
     <div class="must-talent">
       <h3>MUST人才库</h3>
-      <div class="swiper-box" v-swiper:mySwiper="swiperOption" @someSwiperEvent="swiperCallback">
+      <div class="swiper-box" v-swiper:mySwiper="swiperOption" @someSwiperEvent="swiperCallback" v-if="teacherlist.length > 0">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="teacher in teacherlist" :key="teacher.id">
             <a :href="teacher.jumpUrl">
@@ -173,8 +173,9 @@ export default {
     return {
       swiperOption: {
         loop: true,
-        autoplay: true,
-        slidesPerView: 4
+        autoplay: { delay: 1000},
+        loopedSlides: 2,
+        slidesPerView: 4,
       },
       carousel: [
         { src: "@/assets/img/banner.jpg" },

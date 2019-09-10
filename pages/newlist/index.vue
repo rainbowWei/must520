@@ -48,7 +48,6 @@
       <el-pagination
           v-show="newsListPageInfo.total > newsListPageInfo.pageSize"
           class="pagination"
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="newsListPageInfo.currentPage"
           :page-size="newsListPageInfo.pageSize"
@@ -142,10 +141,6 @@ export default {
       });
     },
     //分页器
-
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
     handleCurrentChange(val) {
       this.handleGetNewsArticle(this.activeKey, val);
     }

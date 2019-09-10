@@ -21,3 +21,10 @@ export const getGradeList = (params = {}) => axios({
   method: 'get',
   params
 })
+
+//向后台提交数据
+export const submitMessage = (params = {}) => axios({
+  url: '/messageBoard',
+  method: 'get',
+  params
+})

@@ -141,9 +141,7 @@ export default {
       let pwd = Cookies.get("mcpwd"); //获取cookie中的密码
       const remberme = Cookies.get("remberme") === "true";
       if (remberme && loginCode && pwd) {
-        //用户名存在的话把用户名填充到用户名文本框
         this.loginForm.account = loginCode;
-        //密码存在的话把密码填充到密码文本框
         this.loginForm.checkPass = Base64.decode(pwd);
         this.checked = remberme;
       }

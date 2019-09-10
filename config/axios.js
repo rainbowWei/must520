@@ -13,6 +13,7 @@ const instance = nativeAxios.create({
   },
   baseURL: `${config.url}`
 })
+// baseURL:`http://${process.env.HOST||'localhost'}:${process.env.PORT||3000}`,
 
 instance.interceptors.request.use(function (conf) {
   if (conf.method === 'get') {

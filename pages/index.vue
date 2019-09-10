@@ -3,7 +3,7 @@
     <el-carousel class="carousel" :interval="2000" arrow="always" :autoplay="true" trigger="click">
       <el-carousel-item v-for="item in carousel" :key="item.src">
         <!-- <img :src="item.src" alt=""> -->
-        <img src="@/assets/img/banner2.jpg" alt="">
+        <img src="@/assets/img/banner2.jpg" alt />
       </el-carousel-item>
     </el-carousel>
     <!-- MUUST介绍 -->
@@ -57,32 +57,37 @@
       <ul class="goodness-list">
         <li class="item1">
           <h3>实操性</h3>
-          <p>50000+家长和康复师使用的
-            <br>实操技巧，即学即用
+          <p>
+            50000+家长和康复师使用的
+            <br />实操技巧，即学即用
           </p>
         </li>
         <li class="item2">
           <h3>全面性</h3>
-          <p>18个维度全面涵盖
-            <br>自闭症康复的各种方法技巧
+          <p>
+            18个维度全面涵盖
+            <br />自闭症康复的各种方法技巧
           </p>
         </li>
         <li class="item3">
           <h3>有效性</h3>
-          <p>96%的自闭症孩子接受
-            <br>MUST训练3个月内进步明显
+          <p>
+            96%的自闭症孩子接受
+            <br />MUST训练3个月内进步明显
           </p>
         </li>
         <li class="item4">
           <h3>系统性</h3>
-          <p>8个领域进行一体化综合培养
-            <br>包含评估与训练
+          <p>
+            8个领域进行一体化综合培养
+            <br />包含评估与训练
           </p>
         </li>
         <li class="item5">
           <h3>实用性</h3>
-          <p>5000多个案例实证过的方式
-            <br>具有很强的实用性
+          <p>
+            5000多个案例实证过的方式
+            <br />具有很强的实用性
           </p>
         </li>
       </ul>
@@ -141,12 +146,17 @@
     <!-- 人才库 -->
     <div class="must-talent">
       <h3>MUST人才库</h3>
-      <div class="swiper-box" v-swiper:mySwiper="swiperOption" @someSwiperEvent="swiperCallback" v-if="teacherlist.length > 0">
+      <div
+        class="swiper-box"
+        v-swiper:mySwiper="swiperOption"
+        @someSwiperEvent="swiperCallback"
+        v-if="teacherlist.length > 0"
+      >
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="teacher in teacherlist" :key="teacher.id">
             <a :href="teacher.jumpUrl">
               <div class="teacher-pho">
-                <img :src="teacher.cover" alt="teacher desp">
+                <img :src="teacher.cover" alt="teacher desp" />
               </div>
               <div class="teacher-name">{{teacher.name}}</div>
               <div class="teacher-address">
@@ -173,9 +183,9 @@ export default {
     return {
       swiperOption: {
         loop: true,
-        autoplay: { delay: 1000},
+        autoplay: { delay: 1000 },
         loopedSlides: 2,
-        slidesPerView: 4,
+        slidesPerView: 4
       },
       carousel: [
         { src: "@/assets/img/banner.jpg" },

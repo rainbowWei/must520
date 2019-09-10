@@ -1,25 +1,18 @@
 <template>
   <div class="talent-page">
     <div class="banner">
-      <img src="@/assets/img/banner3.jpg" alt />
+      <img src="@/assets/img/banner3.jpg" alt="">
     </div>
     <div class="expert">
       <h3>
         <i></i>MUST认证专家
       </h3>
       <div class="query">
-        <dl class="area">
+        <!-- <dl class="area">
           <dt>地区：</dt>
           <dd>
             <el-form :model="selectForm" ref="selectForm">
-              <el-select v-model="ite" placeholder="请选择" class="sectionStyle">
-                <el-option
-                  :value="area.id"
-                  :label="area.area"
-                  v-for="area in talentarea"
-                  :key="area.id"
-                ></el-option>
-              </el-select>
+              
             </el-form>
           </dd>
         </dl>
@@ -32,13 +25,42 @@
             @click="() => handleTabs(grade.id)"
           >{{grade.name}}</dd>
         </dl>
-        <dl class="inquiry" @click="handleinquire()">查询</dl>
+        <dl class="inquiry" @click="handleinquire()">查询</dl>-->
+
+
+        <el-form :inline="true" :model="paramsSelect" class="demo-form-inline">
+          <el-form-item label="地区">
+            <el-select v-model="paramsSelect.region" placeholder="请选择" class="sectionStyle">
+              <el-option
+                :value="area.id"
+                :label="area.area"
+                v-for="area in talentarea"
+                :key="area.id"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="级别">
+            <el-select v-model="paramsSelect.level" placeholder="请选择">
+              <el-option
+                v-for="grade in talentgrade"
+                :key="grade.id"
+                :value="grade.id"
+                :label="grade.id"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleinquire111">查询</el-button>
+          </el-form-item>
+        </el-form>
+
+
       </div>
       <div class="expertInf">
         <ul class="expert-detil">
           <li v-for="teacher in talentTeacherList" :key="teacher.id">
             <div class="expert-img">
-              <img :src="teacher.cover" alt />
+              <img :src="teacher.cover" alt="">
               <div class="expert-con">
                 <div class="expert-nl clearfix">
                   <div class="name fl">
@@ -104,6 +126,10 @@ export default {
         total: 0,
         pageSize: 6,
         currentPage: 1
+      },
+      paramsSelect: { // todo  搜索表头
+        region: '',
+        level: ''
       }
     };
   },
@@ -178,10 +204,15 @@ export default {
     },
     //点击查询
     handleinquire() {
-      this.handleGetTeacherList(
-        this.activeKey,
-        1
-      );
+      this.handleGetTeacherList(this.activeKey, 1);
+    },
+    handleinquire111() {  //   todo  
+      console.log('=======>>> 查询哦, 这儿这个就是你要查询传递的参数, 看看对不对', this.paramsSelect)
+      // 我看你接口要的字段是 gradeid 和 areaid  , 你在这儿也可以命名成这两个噻
+      // this.paramsSelect = { gradeid: 'xxx', areaid: 'xxx'}
+      // 用的时候就可以直接 {...this.paramsSelect} 了,方便一些
+      // this.handleGetTeacherList(this.paramsSelect.gradeid, this.paramsSelect.areaid, 1);
+      this.handleGetTeacherList(this.paramsSelect.level, this.paramsSelect.region, 1);
     },
     //分页
     handleCurrentChange(val) {

@@ -25,13 +25,6 @@ instance.interceptors.request.use(function (conf) {
         Reflect.deleteProperty(conf.params, key)
       }
     })
-    const search = Object.keys(conf.params).map(key => {
-      return `${key}=${conf.params[key]}`
-    }).join('&')
-  
-    conf = Object.assign(conf, {
-      url: `${conf.url}?${search}`
-    })
   }
   return conf
 })

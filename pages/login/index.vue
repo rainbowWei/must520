@@ -85,16 +85,14 @@ export default {
               this.logining = false;
               if (res.code === 200) {
                 if (res.data) {
+                  console.log(res.data,"++++++++++++++++++")
                   //添加cookie
                   this.setCookie();
                   //这里设置缓存存储Token
                   localStorage.setItem("authKey", res.data.authKey);
                   localStorage.setItem("sessionId", res.data.sessionId);
-                  // _this.$router.replace('/manage');
-                  // alert("登录成功");
-                  this.$message({
-                    message: "登录成功"
-                  });
+                  //登录成功跳到首页
+                  this.$router.replace('/');
                 }
               } else if (res.code === 400) {
                 this.$message({
@@ -150,8 +148,7 @@ export default {
       alert("这是忘记密码页面");
     },
     zcClick() {
-      // this.$router.replace('/uregiste');
-      alert("这是注册页面");
+      this.$router.replace('/register');
     },
     //键盘监听事件
     keyEvents: function(e) {

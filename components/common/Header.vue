@@ -3,20 +3,26 @@
     <div class="slogo clearfix">
       <div class="content">
         <div class="slogoL fl">自闭症康复训练技术——MUST引导行为，行为改变命运</div>
-        <r-user-avatar/>
+        <r-user-avatar />
       </div>
     </div>
     <div class="headerLogo">
       <div class="content">
         <div class="logo fl">
           <a href="/">
-            <img src="@/assets/img/logo.png" alt="">
+            <img src="@/assets/img/logo.png" alt />
           </a>
         </div>
         <div class="search fl">
-          <input type="text" name="" id="">
-          <p>资格考试 MUST专家 杜佳楣 认证课程</p>
-          <a href="javascript:" class="searchsumit"></a>
+          <el-input placeholder="请输入搜索内容" v-model="input5">
+            <el-button slot="append" class="searchsumit"></el-button>
+          </el-input>
+          <ul class="tip">
+            <li>资格考试</li>
+            <li>MUST专家</li>
+            <li>杜佳楣</li>
+            <li>认证课程</li>
+          </ul>
         </div>
         <div class="contact fl">
           <a href="tel:010-52668752">
@@ -42,34 +48,35 @@
 </template>
 
 <script>
-import RUserAvatar from '@/components/common/UserAvatar.vue';
-import { typevalue } from '@/config/utils';
+import RUserAvatar from "@/components/common/UserAvatar.vue";
+import { typevalue } from "@/config/utils";
 
 const catalogues = [
-  { toUrl: '/', title: '首页' },
-  { toUrl: '/courselist', title: '课程认证' },
-  { toUrl: '/exam', title: '资格考试' },
-  { toUrl: '/talentlist', title: 'MUST人才库' },
-  { toUrl: '/videocenter', title: '视频中心' },
-  { toUrl: '/newlist', title: '新闻资讯' },
-  { toUrl: '/cooperate', title: '合作加盟' },
-  { toUrl: '/about', title: '关于MUST' }
+  { toUrl: "/", title: "首页" },
+  { toUrl: "/courselist", title: "课程认证" },
+  { toUrl: "/exam", title: "资格考试" },
+  { toUrl: "/talentlist", title: "MUST人才库" },
+  { toUrl: "/videocenter", title: "视频中心" },
+  { toUrl: "/newlist", title: "新闻资讯" },
+  { toUrl: "/cooperate", title: "合作加盟" },
+  { toUrl: "/about", title: "关于MUST" }
 ];
 export default {
-  name: 'Header',
+  name: "Header",
   components: {
     RUserAvatar
   },
   data() {
     return {
       catalogues,
-      path: '/'
+      path: "/",
+      input5: ""
     };
   },
   created() {
     if (process.browser) {
       this.path = this.getQueryString();
-      console.log(this.catalogues, '=======nav', this.path);
+      console.log(this.catalogues, "=======nav", this.path);
     }
   },
   methods: {
@@ -77,11 +84,11 @@ export default {
       // const reg = /^http(?:s)?:\/\/.+(?:\.com|cn|net)(?:(\/.+)*)$/g;
       const reg = /^http(?:s)?:\/\/.+(?:\.com|cn|net)(?:(\/.+)*)$/g;
       const result = reg.exec(window.location.href);
-      const path = result ? `/${result[1].split('/')[1]}` : '/';
+      const path = result ? `/${result[1].split("/")[1]}` : "/";
 
       // filter find includes
       const catalogue = catalogues.find(catalogue => catalogue.toUrl === path);
-      return catalogue ? catalogue.toUrl : '';
+      return catalogue ? catalogue.toUrl : "";
     },
     getUrl(path) {
       this.path = path;
@@ -89,7 +96,26 @@ export default {
   }
 };
 </script>
-
+<style lang="scss">
+.xxw-header {
+  .el-button {
+    width: 60px;
+    height: 61px;
+    @include imgurl("/sprite.png");
+    background-position: -297px -34px;
+    position: absolute;
+    top: -3px;
+    right: 9px;
+    border: none;
+  }
+  .el-input-group__append {
+    border: none;
+  }
+  .el-input__inner {
+    border: 1px solid $primary-color;
+  }
+}
+</style>
 <style lang="scss" scoped>
 .xxw-header {
   .nav {
@@ -108,18 +134,17 @@ export default {
         color: #fff;
         display: inline-block;
         @include size(100%);
-        
       }
-        &:hover {
-          .nuxt-link {
-            color: $primary-color;
-          }
+      &:hover {
+        .nuxt-link {
+          color: $primary-color;
         }
-        &.active {
-          .nuxt-link {
-            color: $primary-color
-          }
+      }
+      &.active {
+        .nuxt-link {
+          color: $primary-color;
         }
+      }
     }
   }
 }
@@ -133,10 +158,6 @@ export default {
   line-height: 40px;
   width: 100%;
   font-size: 18px;
-  .RegisterLogin {
-    width: 165px;
-    text-align: center;
-  }
 }
 .headerLogo {
   width: 100%;
@@ -154,26 +175,16 @@ export default {
     width: 428px;
     margin: 38px 140px 0 170px;
     position: relative;
-    input {
-      width: 390px;
-      height: 38px;
-      border: 1px solid $primary-color;
-      border-radius: 4px;
-    }
-    p {
-      color: #aaaaa9;
+    .tip {
       margin-top: 8px;
-    }
-    .searchsumit {
-      width: 60px;
-      height: 61px;
-      @include imgurl("/sprite.png");
-      background-position: -297px -34px;
-      position: absolute;
-      top: -10px;
-      right: -10px;
+      li {
+        float: left;
+        color: #aaaaa9;
+        margin: 0 5px;
+      }
     }
   }
+
   .contact {
     font-size: 24px;
     font-weight: bold;

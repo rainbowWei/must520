@@ -10,7 +10,7 @@
 <script>
 import RHeader from '@/components/common/Header';
 import RFooter from '@/components/common/Footer';
-import RFloat from '@/components/common/RightFloatWindow';
+import RFloat from '@/components/common/RightFloatWin';
 
 export default {
   components: {

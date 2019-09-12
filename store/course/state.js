@@ -1,3 +1,4 @@
-export default {
+
+export const state = () => ({
   courseLists: []
-}
+})

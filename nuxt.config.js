@@ -23,15 +23,15 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    '~assets/css/reset.css',
-    'element-ui/lib/theme-chalk/index.css',
+    '~assets/css/reset.css',  
+    'element-ui/lib/theme-chalk/index.css'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
     '@/plugins/main',
-    '@/plugins/element-ui'
+    { src: "@/plugins/element-ui", ssr: true }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -47,6 +47,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    vendor:['vue-awesome-swiper/dist/ssr'],
     transpile: [/^element-ui/],
     styleResources: {
       scss: './assets/css/mixin.scss'

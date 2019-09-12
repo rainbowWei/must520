@@ -1,5 +1,3 @@
-$--color-primary: #ed9; // 主题颜色
+$--color-primary: #ef8200; // 主题颜色
 
-$--font-path: '~element-ui/lib/theme-chalk/fonts';
-
-@import "~element-ui/packages/theme-chalk/src/index";
+$--font-path: '~element-ui/lib/theme-chalk/fonts';  //改变 icon 字体路径变量

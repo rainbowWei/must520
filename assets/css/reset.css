@@ -1,34 +1,53 @@
 @charset "UTF-8";
 
+html,
 body,
 div,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
+span,
+object,
+iframe,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-pre,
-code,
-form,
-fieldset,
-legend,
-input,
-textarea,
 p,
 blockquote,
-th,
-td,
-hr,
-button,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+caption,
 article,
 aside,
+canvas,
 details,
 figcaption,
 figure,
@@ -37,95 +56,90 @@ header,
 hgroup,
 menu,
 nav,
-section {
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
-  padding: 0
-}
-
-body {
-  font: 12px/1.5 "PingFangSC-Regular", "Helvetica Neue", Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  width: 100%;
-  background: #f8f8f8;
-}
-
-html,
-body,
-.wrapper {
-  height: 100%;
-}
-
-input,
-select,
-textarea {
-  font-size: 100%;
-}
-
-input {
-  text-indent: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
   background: transparent;
-  border: 0 none;
-  resize: none;
-  outline: none;
-  /*清除选中效果的默认蓝色边框 */
-  -webkit-appearance: none;
-  /*清除浏览器默认的样式 */
-  line-height: normal;
+  font-family: SimHei;
 }
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
 }
-
-ul,
-li,
-ol {
-  list-style: none
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
-  font-weight: normal;
-}
-
+h6,
 em,
 i {
+  font-weight: normal;
   font-style: normal;
 }
-
-fieldset,
-img {
-  border: 0
+ul,
+ol,
+li {
+  list-style-type: none;
 }
-
 a {
-  color: inherit;
+  color: #000;
   text-decoration: none;
+  outline: 0;
 }
-
-button {
+b,
+strong {
+  font-weight: normal;
+}
+input {
   outline: none;
   border: none;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+textarea {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  list-style: none;
+  outline: none;
+  resize: none;
+}
+body {
+  min-width: 1200px;
 }
 
-html,
-div,
-p,
-ul,
-li,
-form,
-span,
-h2,
-h3,
-h4 {
-  word-wrap: break-word;
-  word-break: break-all;
+.fr{
+  float: right;
+}
+.fl{
+  float: left;
+}
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+}
+.clearfix {
+  zoom: 1;
 }
 
 /* * { touch-action: auto; }  */

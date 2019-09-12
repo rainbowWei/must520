@@ -4,7 +4,7 @@ import nativeAxios from 'axios'
 const IS_DEV = process.env.NODE_ENV === 'development' ? true : false
 
 const config  = {
-  url: IS_DEV ? `https://www.easy-mock.com/mock/5d121c84a9c50f15f3066896/` : `https://www.easy-mock.com/mock/5d121c84a9c50f15f3066896/`,
+  url: IS_DEV ? `http://dongju.tech` : `https://www.easy-mock.com/mock/5d121c84a9c50f15f3066896/`,
 }
 
 const instance = nativeAxios.create({
@@ -13,6 +13,7 @@ const instance = nativeAxios.create({
   },
   baseURL: `${config.url}`
 })
+// baseURL:`http://${process.env.HOST||'localhost'}:${process.env.PORT||3000}`,
 
 instance.interceptors.request.use(function (conf) {
   if (conf.method === 'get') {
@@ -20,13 +21,10 @@ instance.interceptors.request.use(function (conf) {
       conf.params = {}
     }
     conf.params[`_t`] = Date.now()
-    
-    const search = Object.keys(conf.params).map(key => {
-      return `${key}=${conf.params[key]}`
-    }).join('&')
-  
-    conf = Object.assign(conf, {
-      url: `${conf.url}?${search}`
+    Object.keys(conf.params).forEach(key => {
+      if (!conf.params[key] && conf.params[key] !== 0) {
+        Reflect.deleteProperty(conf.params, key)
+      }
     })
   }
   return conf

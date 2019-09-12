@@ -34,3 +34,7 @@
     text-overflow: ellipsis;
   }
 }
+
+@mixin imgurl($path) {
+  background: url($imgurl + $path) no-repeat;
+}

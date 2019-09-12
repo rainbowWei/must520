@@ -199,6 +199,7 @@ export default {
     justify-content: flex-start;
     font-size: 24px;
     margin-bottom: 59px;
+    line-height: 40px;
     li {
       padding: 0 12px;
       border: 1px solid #e7e8ed;

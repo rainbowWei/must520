@@ -34,7 +34,7 @@
   "config": {
     "nuxt": {
       "host": "localhost",
-      "port": 4001
+      "port": 8081
     }
   }
 }

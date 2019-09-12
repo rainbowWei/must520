@@ -10,7 +10,7 @@
       <div class="query">
         <el-form :inline="true" :model="paramsSelect" class="demo-form-inline">
           <dl class="area">
-            <el-form-item label="地区">
+            <el-form-item label="地区:">
               <el-select v-model="paramsSelect.region" placeholder="请选择" class="sectionStyle">
                 <el-option
                   :value="area.id"
@@ -73,7 +73,6 @@
                   <div class="name fl">
                     <p class="fl">{{teacher.name}}</p>
                     <el-button type="text" @click="dialogFormVisible = true" class="contact fl">联系我</el-button>
-                    <!-- <div  >联系我</div> -->
                   </div>
                   <div class="level fl">{{teacher.gradename}}</div>
                 </div>
@@ -97,7 +96,6 @@
         </ul>
       </div>
     </div>
-    <!-- <r-popover> </r-popover> -->
     <el-pagination
       v-show="talentListPageInfo.total > talentListPageInfo.pageSize"
       class="pagination"
@@ -130,7 +128,7 @@
         <el-form-item prop="phone">
           <div class="name">手机：</div>
           <el-input
-            type="number"
+            type="text"
             v-model="dialogForm.phone"
             auto-complete="off"
             placeholder="请输入手机号码"
@@ -170,7 +168,28 @@ import {
   submitMessage
 } from "@/api/talent/";
 import { formatDate } from "@/assets/js/date";
-import RPopover from "@/components/common/Popover";
+import{isvalidPhone,isvalidMailbox} from '@/config/validate';
+
+//定义一个全局变量
+var validPhone= (rule,value,callback) =>{
+  if(!value){
+    callback(new Error('请输入电话号码'))
+  }else if(!isvalidPhone(value)){
+    callback(new Error('请输入正确的手机号码'))
+  }else{
+    callback()
+  }
+}
+var validMailbox= (rule,value,callback) =>{
+  if(!value){
+    callback(new Error('请输入邮箱'))
+  }else if(!isvalidMailbox(value)){
+    callback(new Error('请输入正确的邮箱'))
+  }else{
+    callback()
+  }
+}
+
 export default {
   data() {
     return {
@@ -197,14 +216,11 @@ export default {
       },
       dialogRule: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
-        mailbox: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
+        phone: [{ validator: validPhone , trigger: "blur" }], //这里需要全局变量
+        mailbox: [{ validator: validMailbox , trigger: "blur"}],
         remarks: [{ required: true, message: "请输入备注", trigger: "blur" }]
       }
     };
-  },
-  components: {
-    RPopover
   },
   filters: {
     formatDate(time) {
@@ -320,7 +336,7 @@ export default {
   width: 490px;
   height: 430px;
   position: fixed;
-  top:50%;
+  top: 50%;
   left: 50%;
   margin-left: -245px !important;
   margin-top: -215px !important;

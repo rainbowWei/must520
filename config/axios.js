@@ -4,7 +4,7 @@ import nativeAxios from 'axios'
 const IS_DEV = process.env.NODE_ENV === 'development' ? true : false
 
 const config  = {
-  url: IS_DEV ? `http://dongju.tech` : `https://www.easy-mock.com/mock/5d121c84a9c50f15f3066896/`,
+  url: IS_DEV ? `http://dongju.tech` : `http://dongju.tech`,
 }
 
 const instance = nativeAxios.create({

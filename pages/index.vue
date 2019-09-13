@@ -168,11 +168,70 @@
         </div>
       </div>
     </div>
+    <!-- MUST认证机构 -->
+    <div class="must-mechanism">
+      <div class="content">
+        <h3>MUST认证机构</h3>
+      </div>
+    </div>
+
+    <!-- 新闻资讯、信息公告 -->
+    <div class="must-news">
+      <div class="information fl">
+        <div class="inforhead clearfix">
+          <h3 class="fl">
+            <i></i>
+            <b>新闻资讯</b>
+          </h3>
+          <nuxt-link :to="`/newlist/detail/`" class="more fr">>></nuxt-link>
+        </div>
+        <div class="inforcon clearfix">
+          <div class="leftImg fl">
+            <li v-for=" article in newsarticlelist.slice(0, 1)" :key="article.id">
+              <nuxt-link :to="`/newlist/detail/${article.id}`">
+                <img :src="article.cover" alt />
+                <h2>{{article.title}}</h2>
+              </nuxt-link>
+            </li>
+          </div>
+          <ul class="rightText fr">
+            <li v-for=" article in newsarticlelist.slice(1, 9)" :key="article.id">
+              <nuxt-link :to="`/newlist/detail/${article.id}`">
+                <h3>{{article.title.substring(0,28)}}</h3>
+                <div class="time">{{article.created_at | formatDate}}</div>
+              </nuxt-link>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="notice fl">
+        <div class="noticehead clearfix">
+          <h3 class="fl">
+            <i></i>
+            <b>信息公告</b>
+          </h3>
+          <nuxt-link :to="`/newlist/detail/`" class="more fr">>></nuxt-link>
+        </div>
+        <ul class="noticecon">
+          <li v-for="notice in newsnoticelist.slice(0, 8)" :key="notice.id">
+            <nuxt-link :to="`/newlist/detail/${notice.id}`">
+              <h3>
+                <i></i>
+                {{notice.title.substring(0,28)}}
+              </h3>
+              <div class="time">{{notice.created_at | formatDate}}</div>
+            </nuxt-link>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { getTeacherList } from "@/api/home/home";
+import { getNewsArticle } from "@/api/news/";
+import { formatDate } from "@/assets/js/date";
 import Swiper from "swiper";
 export default {
   head: {
@@ -211,12 +270,23 @@ export default {
         }
       ],
       on: false,
-      teacherlist: [] //人才库列表
+      teacherlist: [], //人才库列表
+      newsarticlelist: [], //新闻资讯列表
+      newsnoticelist: [] //信息公告列表
     };
   },
-
+  filters: {
+    formatDate(time) {
+      //将时间戳转化为日期格式
+      time = time * 1000;
+      let date = new Date(time);
+      return formatDate(date, "MM-dd");
+    }
+  },
   mounted() {
     this.handlegetTeacherList();
+    this.handlegetNewsArticle();
+    this.handlegetNewsNotice(6);
   },
   methods: {
     // swiper 回调函数
@@ -241,6 +311,26 @@ export default {
       getTeacherList().then(res => {
         if (res.data) {
           this.teacherlist = res.data.data;
+        }
+      });
+    },
+
+    //渲染新闻资讯数据
+    handlegetNewsArticle() {
+      getNewsArticle().then(res => {
+        if (res.data) {
+          this.newsarticlelist = res.data.data;
+        }
+      });
+    },
+
+    //渲染信息公告数据
+    handlegetNewsNotice(id) {
+      getNewsArticle({
+        cateid: id
+      }).then(res => {
+        if (res.data) {
+          this.newsnoticelist = res.data.data;
         }
       });
     }
@@ -540,6 +630,165 @@ export default {
   }
   #left {
     background-position: -38px -150px;
+  }
+}
+//MUST认证机构
+.must-mechanism {
+  width: 100%;
+  height: 360px;
+  padding-top: 40px;
+  background: #00b7e8;
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  h3 {
+    font-size: 34px;
+    font-weight: bold;
+    line-height: 34px;
+    text-align: center;
+    color: #fff;
+  }
+}
+//新闻资讯、信息公告
+.must-news {
+  max-width: 1200px;
+  height: 360px;
+  padding-top: 50px;
+  margin: 0 auto;
+  .information {
+    width: 780px;
+    margin-right: 59px;
+    .inforhead {
+      height: 31px;
+      border-bottom: 2px solid #646464;
+      padding-bottom: 1px;
+      h3 {
+        height: 100%;
+        font-size: 30px;
+        position: relative;
+        i {
+          width: 30px;
+          height: 31px;
+          @include imgurl("/sprite.png");
+          background-position: -446px -49px;
+          position: absolute;
+          bottom: 1px;
+          left: 0;
+        }
+        b {
+          width: 150px;
+          line-height: 30px;
+          position: absolute;
+          bottom: 1px;
+          left: 43px;
+        }
+      }
+      .more {
+        width: 24px;
+        height: 24px;
+        background: #dedee2;
+        display: inline-block;
+        border-radius: 4px;
+        text-align: center;
+        line-height: 24px;
+      }
+    }
+    .inforcon {
+      width: 100%;
+      height: 246px;
+      .leftImg {
+        margin-top: 9px;
+        width: 298px;
+        img {
+          width: 100%;
+          height: 180px;
+        }
+        h2 {
+          font-size: 13px;
+          margin-top: 16px;
+        }
+      }
+      .rightText {
+        width: 450px;
+        height: 100%;
+        li {
+          height: 31px;
+          line-height: 31px;
+        }
+        h3 {
+          float: left;
+          font-size: 13px;
+        }
+        .time {
+          float: right;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  .notice {
+    width: 360px;
+    .noticehead {
+      height: 31px;
+      border-bottom: 2px solid #646464;
+      padding-bottom: 1px;
+      h3 {
+        font-size: 30px;
+        height: 100%;
+        position: relative;
+        i {
+          width: 30px;
+          height: 31px;
+          @include imgurl("/sprite.png");
+          background-position: -505px -49px;
+          position: absolute;
+          bottom: 1px;
+          left: 0;
+        }
+        b {
+          width: 150px;
+          line-height: 30px;
+          position: absolute;
+          bottom: 1px;
+          left: 40px;
+        }
+      }
+      .more {
+        width: 24px;
+        height: 24px;
+        background: #dedee2;
+        display: inline-block;
+        border-radius: 4px;
+        text-align: center;
+        line-height: 24px;
+      }
+    }
+    .noticecon {
+      width: 100%;
+      height: 246px;
+      li {
+        height: 31px;
+        line-height: 31px;
+      }
+      h3 {
+        float: left;
+        font-size: 13px;
+        i {
+          width: 17px;
+          height: 16px;
+          @include imgurl("/sprite.png");
+          background-position: -566px -54px;
+          display: inline-block;
+          margin-right: 4px;
+        }
+      }
+      .time {
+        float: right;
+        font-size: 13px;
+      }
+    }
   }
 }
 </style>

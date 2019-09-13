@@ -25,6 +25,6 @@ export const getGradeList = (params = {}) => axios({
 //向后台提交数据
 export const submitMessage = (params = {}) => axios({
   url: '/messageBoard',
-  method: 'get',
+  method: 'post',
   params
 })

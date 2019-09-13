@@ -35,7 +35,7 @@
               <el-checkbox v-model="checked" class="remember">记住我</el-checkbox>
             </div>
             <div class="right">
-              <a href="javascript:;" @click="rememberClick()" class="">忘记密码？</a>
+              <a href="javascript:;" @click="rememberClick()" class>忘记密码？</a>
             </div>
           </div>
           <div class="button">
@@ -85,16 +85,14 @@ export default {
               this.logining = false;
               if (res.code === 200) {
                 if (res.data) {
+                  console.log(res.data, "++++++++++++++++++");
                   //添加cookie
                   this.setCookie();
                   //这里设置缓存存储Token
                   localStorage.setItem("authKey", res.data.authKey);
                   localStorage.setItem("sessionId", res.data.sessionId);
-                  // _this.$router.replace('/manage');
-                  // alert("登录成功");
-                  this.$message({
-                    message: "登录成功"
-                  });
+                  //登录成功跳到首页
+                  this.$router.replace("/");
                 }
               } else if (res.code === 400) {
                 this.$message({
@@ -150,8 +148,7 @@ export default {
       alert("这是忘记密码页面");
     },
     zcClick() {
-      // this.$router.replace('/uregiste');
-      alert("这是注册页面");
+      this.$router.replace("/register");
     },
     //键盘监听事件
     keyEvents: function(e) {
@@ -167,19 +164,21 @@ export default {
 };
 </script>
 <style lang="scss">
-.el-form-item {
-  margin-bottom: 35px;
-}
-.el-input,
-.el-checkbox__label {
-  font-size: 22px;
-}
-.el-checkbox {
-  font-size: 18px;
-}
-.el-checkbox__inner {
-  width: 16px;
-  height: 16px;
+.login {
+  .el-form-item {
+    margin-bottom: 35px;
+  }
+  .el-input,
+  .el-checkbox__label {
+    font-size: 22px;
+  }
+  .el-checkbox {
+    font-size: 18px;
+  }
+  .el-checkbox__inner {
+    width: 16px;
+    height: 16px;
+  }
 }
 </style>
 <style lang="scss" scoped>

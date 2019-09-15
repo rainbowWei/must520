@@ -1,7 +1,7 @@
 <template>
   <div class="talent-page">
     <div class="banner">
-      <img src="@/assets/img/banner3.jpg" alt />
+      <img :src="$imgUrl('/banner3.jpg')" alt />
     </div>
     <div class="expert">
       <h3>

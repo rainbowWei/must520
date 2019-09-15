@@ -39,8 +39,8 @@
             </div>
           </div>
           <div class="button">
-            <a href="javascript:" id="login" @click="handleLogin()" :loading="logining">登录</a>
-            <a href="javascript:" class="register reg-btn" @click="zcClick()">注册</a>
+            <div id="login" @click="handleLogin()" :loading="logining">登录</div>
+            <nuxt-view class="register reg-btn" @click="zcClick()">注册</nuxt-view>
           </div>
         </div>
       </el-form>
@@ -91,8 +91,9 @@ export default {
                   //这里设置缓存存储Token
                   localStorage.setItem("authKey", res.data.authKey);
                   localStorage.setItem("sessionId", res.data.sessionId);
+                  localStorage.setItem("loginInfo", JSON.stringify(res.data.userInfo))
                   //登录成功跳到首页
-                  this.$router.replace("/");
+                  this.$router.push("/");
                 }
               } else if (res.code === 400) {
                 this.$message({

@@ -1,7 +1,7 @@
 <template>
   <div class="coo-page">
     <div class="coo-banner">
-      <img src="@/assets/img/cooperate/banner.png" alt />
+      <img :src="$imgUrl('/cooperate/banner.png')" alt="">
     </div>
     <div class="coo-from">
       <h3 class="title">合作加盟宣传语</h3>
@@ -9,23 +9,13 @@
         <div class="item">
           <el-form-item prop="name">
             <div class="name">姓名：</div>
-            <el-input
-              type="text"
-              v-model="coopForm.name"
-              placeholder="请输入姓名"
-              auto-complete="off"
-            ></el-input>
+            <el-input type="text" v-model="coopForm.name" placeholder="请输入姓名" auto-complete="off"></el-input>
           </el-form-item>
         </div>
         <div class="item">
           <el-form-item prop="phone">
             <div class="name">电话：</div>
-            <el-input
-              type="text"
-              v-model="coopForm.phone"
-              placeholder="请输入电话号"
-              auto-complete="off"
-            ></el-input>
+            <el-input type="text" v-model="coopForm.phone" placeholder="请输入电话号" auto-complete="off"></el-input>
           </el-form-item>
         </div>
         <div class="item">
@@ -42,44 +32,38 @@
         <div class="item">
           <el-form-item prop="remarks">
             <div class="name">备注：</div>
-            <el-input
-              type="text"
-              v-model="coopForm.remarks"
-              placeholder="填写备注"
-              auto-complete="off"
-            ></el-input>
+            <el-input type="text" v-model="coopForm.remarks" placeholder="填写备注" auto-complete="off"></el-input>
           </el-form-item>
         </div>
-
         <div class="txt">我方将于3个工作日内联系您</div>
-        <div class="submit" @click= "onSubmit()">加盟咨询</div>
+        <div class="submit" @click="onSubmit()">加盟咨询</div>
       </el-form>
     </div>
   </div>
 </template>
 <script>
-import{isvalidPhone,isvalidMailbox} from '@/config/validate';
-import {submitCooperate} from '@/api/cooperate/';
+import { isvalidPhone, isvalidMailbox } from "@/config/validate";
+import { submitCooperate } from "@/api/cooperate/";
 
 //定义一个全局变量
-var validPhone= (rule,value,callback) =>{
-  if(!value){
-    callback(new Error('请输入电话号码'))
-  }else if(!isvalidPhone(value)){
-    callback(new Error('请输入正确的手机号码'))
-  }else{
-    callback()
+const validPhone = (rule, value, callback) => {
+  if (!value) {
+    callback(new Error("请输入电话号码"));
+  } else if (!isvalidPhone(value)) {
+    callback(new Error("请输入正确的手机号码"));
+  } else {
+    callback();
   }
-}
-var validMailbox= (rule,value,callback) =>{
-  if(!value){
-    callback(new Error('请输入邮箱'))
-  }else if(!isvalidMailbox(value)){
-    callback(new Error('请输入正确的邮箱'))
-  }else{
-    callback()
+};
+const validMailbox = (rule, value, callback) => {
+  if (!value) {
+    callback(new Error("请输入邮箱"));
+  } else if (!isvalidMailbox(value)) {
+    callback(new Error("请输入正确的邮箱"));
+  } else {
+    callback();
   }
-}
+};
 export default {
   data() {
     return {
@@ -91,32 +75,32 @@ export default {
       },
       coopRule: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        phone: [{ validator: validPhone , trigger: "blur" }], //这里需要全局变量
-        mailbox: [{ validator: validMailbox , trigger: "blur"}],
+        phone: [{ validator: validPhone, trigger: "blur" }], //这里需要全局变量
+        mailbox: [{ validator: validMailbox, trigger: "blur" }],
         remarks: [{ required: true, message: "填写备注", trigger: "blur" }]
       }
     };
   },
-  methods:{
-    onSubmit(){
-      this.$refs.coopForm.validate( valid =>{
-        if(valid){
+  methods: {
+    onSubmit() {
+      this.$refs.coopForm.validate(valid => {
+        if (valid) {
           submitCooperate({
             name: this.coopForm.name,
             phone: this.coopForm.phone,
             mailbox: this.coopForm.mailbox,
             remarks: this.coopForm.remarks
           }).then(res => {
-            this.coopForm.name = '',
-            this.coopForm.phone = '',
-            this.coopForm.mailbox = '',
-            this.coopForm.remarks = ''
-          })
-        }else{
+            (this.coopForm.name = ""),
+              (this.coopForm.phone = ""),
+              (this.coopForm.mailbox = ""),
+              (this.coopForm.remarks = "");
+          });
+        } else {
           console.log("error submit");
           return false;
         }
-      })
+      });
     }
   }
 };

@@ -4,7 +4,7 @@
       <div class="buy-popup">
         <div class="left">
           <a href="javascript:">
-            <img src="@/assets/img/course/banner.jpg" alt />
+            <img :src="$imgUrl('/course/banner.jpg')" alt />
           </a>
         </div>
         <div class="right">
@@ -45,7 +45,7 @@
         <div class="lecturer">
           <div class="img-box">
             <div class="img-bg">
-              <img src="@/assets/img/course/founder.png" alt />
+              <img :src="$imgUrl('/course/founder.png')" alt />
             </div>
           </div>
           <div class="founder">

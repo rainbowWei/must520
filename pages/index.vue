@@ -2,8 +2,8 @@
   <div class="container">
     <el-carousel class="carousel" :interval="2000" arrow="always" :autoplay="true" trigger="click">
       <el-carousel-item v-for="item in carousel" :key="item.src">
-        <!-- <img :src="item.src" alt=""> -->
-        <img src="@/assets/img/banner2.jpg" alt />
+        <!-- <img :src="$imgUrl(item.src)" alt=""> -->
+        <img :src="$imgUrl('/banner2.jpg')" alt="">
       </el-carousel-item>
     </el-carousel>
     <!-- MUUST介绍 -->
@@ -57,37 +57,32 @@
       <ul class="goodness-list">
         <li class="item1">
           <h3>实操性</h3>
-          <p>
-            50000+家长和康复师使用的
-            <br />实操技巧，即学即用
+          <p>50000+家长和康复师使用的
+            <br>实操技巧，即学即用
           </p>
         </li>
         <li class="item2">
           <h3>全面性</h3>
-          <p>
-            18个维度全面涵盖
-            <br />自闭症康复的各种方法技巧
+          <p>18个维度全面涵盖
+            <br>自闭症康复的各种方法技巧
           </p>
         </li>
         <li class="item3">
           <h3>有效性</h3>
-          <p>
-            96%的自闭症孩子接受
-            <br />MUST训练3个月内进步明显
+          <p>96%的自闭症孩子接受
+            <br>MUST训练3个月内进步明显
           </p>
         </li>
         <li class="item4">
           <h3>系统性</h3>
-          <p>
-            8个领域进行一体化综合培养
-            <br />包含评估与训练
+          <p>8个领域进行一体化综合培养
+            <br>包含评估与训练
           </p>
         </li>
         <li class="item5">
           <h3>实用性</h3>
-          <p>
-            5000多个案例实证过的方式
-            <br />具有很强的实用性
+          <p>5000多个案例实证过的方式
+            <br>具有很强的实用性
           </p>
         </li>
       </ul>
@@ -156,7 +151,7 @@
           <div class="swiper-slide" v-for="teacher in teacherlist" :key="teacher.id">
             <a :href="teacher.jumpUrl">
               <div class="teacher-pho">
-                <img :src="teacher.cover" alt="teacher desp" />
+                <img :src="teacher.cover" alt="teacher desp">
               </div>
               <div class="teacher-name">{{teacher.name}}</div>
               <div class="teacher-address">
@@ -174,7 +169,6 @@
         <h3>MUST认证机构</h3>
       </div>
     </div>
-
     <!-- 新闻资讯、信息公告 -->
     <div class="must-news">
       <div class="information fl">
@@ -189,7 +183,7 @@
           <div class="leftImg fl">
             <li v-for=" article in newsarticlelist.slice(0, 1)" :key="article.id">
               <nuxt-link :to="`/newlist/detail/${article.id}`">
-                <img :src="article.cover" alt />
+                <img :src="article.cover" alt="">
                 <h2>{{article.title}}</h2>
               </nuxt-link>
             </li>
@@ -232,7 +226,7 @@
 import { getTeacherList } from "@/api/home/home";
 import { getNewsArticle } from "@/api/news/";
 import { formatDate } from "@/assets/js/date";
-import Swiper from "swiper";
+
 export default {
   head: {
     title: "首页",
@@ -241,10 +235,14 @@ export default {
   data() {
     return {
       swiperOption: {
-        loop: true,
-        autoplay: { delay: 1000 },
         loopedSlides: 2,
-        slidesPerView: 4
+        loop: true,
+        autoplay: {
+          stopOnLastSlide: false,
+          delay: 1000
+        },
+        loopedSlides: 2,
+        slidesPerView: 5,
       },
       carousel: [
         { src: "@/assets/img/banner.jpg" },
@@ -287,6 +285,7 @@ export default {
     this.handlegetTeacherList();
     this.handlegetNewsArticle();
     this.handlegetNewsNotice(6);
+    console.log(']]]]]]]]]: ', this.$imgUrl('/img/sss'))
   },
   methods: {
     // swiper 回调函数

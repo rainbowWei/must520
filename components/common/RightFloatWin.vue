@@ -1,8 +1,8 @@
 <template>
   <ul class="floatwindow">
-    <li self-key="contact" @mouseover="(e) => handleMouseOver(e)" @mouseout="(e) => handleMouseOut(e)">
+    <li self-key="contact">
       <div class="box">
-        <div :class="activeLi === 'contact' ? 'active' : ''" class="floatLeft">
+        <div class="floatLeft">
           <div class="dianhua">
             <div class="title">
               <span></span>在线客服
@@ -17,9 +17,9 @@
         </div>
       </div>
     </li>
-    <li self-key="telephone"  @mouseover="(e) => handleMouseOver(e)" @mouseout="(e) => handleMouseOut(e)">
+    <li self-key="telephone">
       <div class="box">
-        <div :class="activeLi === 'telephone' ? 'active' : ''" class="floatLeft">
+        <div class="floatLeft">
           <div class="phone">
             <div class="title">
               <span></span>联系电话
@@ -29,35 +29,40 @@
         </div>
       </div>
     </li>
-    <li self-key="wechat"  @mouseover="(e) => handleMouseOver(e)" @mouseout="(e) => handleMouseOut(e)">
+    <li self-key="wechat">
       <div class="box">
-        <div :class="activeLi === 'wechat' ? 'active' : ''" class="floatLeft">
+        <div class="floatLeft">
           <div class="wc">
             <div class="title">
               <span></span>官方微信
             </div>
-            <img class="ewm" src="@/assets/img/ewm.png" alt="">
+            <img class="ewm" :src="$imgUrl('/ewm.png')" alt="">
           </div>
         </div>
       </div>
     </li>
-    <li self-key="complaint"  @mouseover="(e) => handleMouseOver(e)" @mouseout="(e) => handleMouseOut(e)">
+    <li self-key="complaint">
       <div class="box">
-        <div :class="activeLi === 'complaint' ? 'active' : ''" class="floatLeft" >
+        <div class="floatLeft">
           <div class="from">
             <div class="title">
               <span></span>投诉建议
             </div>
-            <div class="name">
-              <input type="text" placeholder="姓名" id="name">
-            </div>
-            <div class="name">
-              <input type="text" placeholder="电话" id="phone">
-            </div>
-            <div class="suggest">
-              <textarea name="" placeholder="投诉建议：" id="suggest"></textarea>
-            </div>
-            <a href="javascript:" class="submit" id="r-submit">提交</a>
+            <el-form ref="complaintForm" :model="formValues">
+              <div class="name">
+                <input v-model="formValues.name" type="text" placeholder="姓名" id="name">
+              </div>
+              <div class="name">
+                <input v-model="formValues.phone" type="text" placeholder="电话" id="phone">
+              </div>
+              <div class="suggest">
+                <textarea v-model="formValues.suggest" name="" placeholder="投诉建议：" id="suggest"></textarea>
+              </div>
+              <!-- 对比一下此处加了防抖函数后的区别，以及两种防抖引入方式的对比 -->
+              <a href="javascript:" class="submit" @click="() => debounce(onSubmit, 500)()" id="r-submit">提交</a>
+              <!-- <a href="javascript:" class="submit" @click="() => $utils.debounce(onSubmit, 500)()" id="r-submit">提交</a> -->
+              <!-- <a href="javascript:" class="submit" @click="onSubmit" id="r-submit">提交</a> -->
+            </el-form>
           </div>
         </div>
       </div>
@@ -65,20 +70,26 @@
   </ul>
 </template>
 <script>
+import { debounce as deb } from '@/config/utils'
 export default {
   data() {
     return {
-      activeLi: ''
+      formValues: {
+        name: '',     // 姓名
+        phone: '',    // 电话
+        suggest: '',  // 投诉建议
+      }
     };
   },
+  mounted() {
+    console.log(this.$utils.debounce, '=====>>> 挂在原型上的工具函数使用')
+  },
   methods: {
-    handleMouseOver(e) {
-      const activeLiKey = e.target.getAttribute("self-key");
-      // console.log(e.target, '----')
-      this.activeLi = activeLiKey;
+    debounce(func, delay, params) {
+      return deb(func, delay, params)
     },
-    handleMouseOut(e) {
-      console.log(e, 'out........')
+    onSubmit() {
+      console.log(this.formValues, '提交建议的数据')
     }
   }
 };
@@ -229,6 +240,12 @@ export default {
     .active {
       margin-right: 10px;
     }
+  }
+  li:hover .floatLeft {
+    margin-right: 10px;
+  }
+  li .box:hover .floatLeft {
+    margin-right: 10px;
   }
   li:nth-child(1) {
     background-position: 0px -50px;

@@ -1,19 +1,13 @@
 import Vue from 'vue'
 import nativeAxios from 'axios'
-
-const IS_DEV = process.env.NODE_ENV === 'development' ? true : false
-
-const config  = {
-  url: IS_DEV ? `http://dongju.tech` : `http://dongju.tech`,
-}
+import config from './config'
 
 const instance = nativeAxios.create({
   headers: {
     'Content-Type': 'application/json; charset=utf8'
   },
-  baseURL: `${config.url}`
+  baseURL: `${config.apiBaseUrl}`
 })
-// baseURL:`http://${process.env.HOST||'localhost'}:${process.env.PORT||3000}`,
 
 instance.interceptors.request.use(function (conf) {
   if (conf.method === 'get') {

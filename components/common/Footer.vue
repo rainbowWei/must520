@@ -36,11 +36,11 @@
         </div>
         <div class="ewm fr">
            <div class="association fl">
-             <img src="@/assets/img/ewm.png" alt="">
+             <img :src="$imgUrl('/ewm.png')" alt="">
              <p>微信扫一扫<br/>加入社群</p>
            </div>
             <div class="xxw fl">
-             <img src="@/assets/img/ewm.png" alt="">
+             <img :src="$imgUrl('/ewm.png')" alt="">
              <p>微信扫一扫<br/>关注星希望</p>
            </div>
         </div>

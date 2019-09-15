@@ -10,7 +10,7 @@
       <div class="content">
         <div class="logo fl">
           <a href="/">
-            <img src="@/assets/img/logo.png" alt />
+            <img :src="$imgUrl('/logo.png')" alt />
           </a>
         </div>
         <div class="search fl">
@@ -82,7 +82,7 @@ export default {
   methods: {
     getQueryString() {
       // const reg = /^http(?:s)?:\/\/.+(?:\.com|cn|net)(?:(\/.+)*)$/g;
-      const reg = /^http(?:s)?:\/\/.+(?:\.com|cn|net)(?:(\/.+)*)$/g;
+      const reg = /^http(?:s)?:\/\/(?:.+(?:\.com|cn|net|site|tech)|localhost:\d{3,6})(?:(\/.+)*)$/g;
       const result = reg.exec(window.location.href);
       const path = result ? `/${result[1].split("/")[1]}` : "/";
 

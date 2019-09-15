@@ -285,7 +285,6 @@ export default {
     this.handlegetTeacherList();
     this.handlegetNewsArticle();
     this.handlegetNewsNotice(6);
-    console.log(']]]]]]]]]: ', this.$imgUrl('/img/sss'))
   },
   methods: {
     // swiper 回调函数

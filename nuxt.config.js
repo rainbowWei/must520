@@ -18,12 +18,12 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },  
+  loading: { color: '#fff' },
   /*
   ** Global CSS
   */
   css: [
-    '~assets/css/reset.css',  
+    '~assets/css/reset.css',
     'element-ui/lib/theme-chalk/index.css'
   ],
   /*
@@ -42,21 +42,25 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/style-resources',
   ],
   /*
   ** Build configuration
   */
   build: {
-    vendor:['vue-awesome-swiper/dist/ssr'],
     transpile: [/^element-ui/],
-    styleResources: {
-      scss: './assets/css/mixin.scss'
-    },
     /*
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-      
+
     }
-  }
+  },
+  styleResources: {
+    scss: './assets/css/mixin.scss'
+  },
+  server: {
+    "host": "localhost",
+    "port": 10086
+  },
 }

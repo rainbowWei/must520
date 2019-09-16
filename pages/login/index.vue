@@ -35,12 +35,12 @@
               <el-checkbox v-model="checked" class="remember">记住我</el-checkbox>
             </div>
             <div class="right">
-              <a href="javascript:;" @click="rememberClick()" class>忘记密码？</a>
+              <a href="javascript:;" @click="rememberClick()" >忘记密码？</a>
             </div>
           </div>
           <div class="button">
-            <div id="login" @click="handleLogin()" :loading="logining">登录</div>
-            <nuxt-view class="register reg-btn" @click="zcClick()">注册</nuxt-view>
+            <nuxt-view :loading="logining" class="btn" @click="handleLogin()">登录</nuxt-view>
+            <nuxt-view class="reg-btn btn" @click="zcClick()">注册</nuxt-view>
           </div>
         </div>
       </el-form>
@@ -85,7 +85,7 @@ export default {
               this.logining = false;
               if (res.code === 200) {
                 if (res.data) {
-                  console.log(res.data, "++++++++++++++++++");
+
                   //添加cookie
                   this.setCookie();
                   //这里设置缓存存储Token
@@ -238,15 +238,15 @@ export default {
       width: 380px;
       height: 40px;
       margin-top: 45px;
-      a {
+      .btn {
         float: left;
         width: 180px;
         height: 100%;
         text-align: center;
         line-height: 40px;
         color: #fff;
-        display: block;
         background: #ef8201;
+        cursor: pointer;
       }
       .reg-btn {
         background: #01b7e7;

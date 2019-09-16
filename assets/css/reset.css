@@ -123,8 +123,11 @@ textarea {
 }
 body {
   min-width: 1200px;
+  -moz-user-select:none; /*火狐*/
+  -webkit-user-select:none; /*webkit浏览器*/
+  -ms-user-select:none; /*IE10*/
+  user-select:none;
 }
-
 .fr{
   float: right;
 }

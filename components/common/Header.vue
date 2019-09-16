@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       catalogues,
-      path: "/",
+      path: "",
       input5: ""
     };
   },

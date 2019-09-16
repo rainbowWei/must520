@@ -6,3 +6,12 @@ export const getTeacherList = (params = {}) => axios({
   method: 'get',
   params
 })
+
+
+//右侧浮窗投诉建议的表单提交
+
+export const submitSuggest = (params = {}) => axios({
+  url: '/sendsuggest',
+  method: 'post',
+  params
+})

@@ -7,3 +7,11 @@ export const getLogin = (params = {}) => axios({
   params
 })
 
+// 退出登录
+export const loginOut = (params = {}) => axios({
+  url: '/loginout',
+  method: 'get',
+  params
+})
+
+

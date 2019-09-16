@@ -1,7 +1,7 @@
 <template>
   <div class="coo-page">
     <div class="coo-banner">
-      <img :src="$imgUrl('/cooperate/banner.png')" alt="">
+      <img :src="$imgUrl('/cooperate/banner.png')" alt />
     </div>
     <div class="coo-from">
       <h3 class="title">合作加盟宣传语</h3>
@@ -36,7 +36,7 @@
           </el-form-item>
         </div>
         <div class="txt">我方将于3个工作日内联系您</div>
-        <div class="submit" @click="onSubmit()">加盟咨询</div>
+        <div class="submit" @click="() => $utils.debounce(onSubmit,500)()">加盟咨询</div>
       </el-form>
     </div>
   </div>

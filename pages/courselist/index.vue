@@ -6,15 +6,6 @@
           <h3>{{ item.cate_name }}</h3>
         </el-carousel-item>
       </el-carousel>
-      <!-- <ol class="self-indicator">
-        <li
-          :class="indicatorIndex === index ? 'active' : ''"
-          v-for="(indicator, index) in courseclassify"
-          :key="indicator.id"
-          @hover="() => handleChangeCarouselIndex(index)"
-          @click="() => handleChangeCarouselIndex(index)"
-        ></li>
-      </ol>-->
     </div>
     <div class="course">
       <h3>

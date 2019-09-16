@@ -155,7 +155,8 @@
             style="float:right"
           ></el-input>
         </el-form-item>
-        <div class="submit" @click="onSubmit()">提交</div>
+        <div class="submit" @click="() => $utils.debounce(onSubmit,500)()">提交</div>   
+        <!-- 这里的防抖函数是全局挂载到vue原型上的工具函数使用 -->
       </el-form>
     </el-dialog>
   </div>
@@ -171,7 +172,7 @@ import { formatDate } from "@/assets/js/date";
 import{isvalidPhone,isvalidMailbox} from '@/config/validate';
 
 //定义一个全局变量
-var validPhone= (rule,value,callback) =>{
+const validPhone= (rule,value,callback) =>{
   if(!value){
     callback(new Error('请输入电话号码'))
   }else if(!isvalidPhone(value)){
@@ -180,7 +181,7 @@ var validPhone= (rule,value,callback) =>{
     callback()
   }
 }
-var validMailbox= (rule,value,callback) =>{
+const validMailbox= (rule,value,callback) =>{
   if(!value){
     callback(new Error('请输入邮箱'))
   }else if(!isvalidMailbox(value)){
@@ -260,7 +261,7 @@ export default {
   methods: {
     handleTabs(key) {
       this.activeKey = key;
-      this.handleGetTeacherList(key, "", 1);
+      // this.handleGetTeacherList(key, "", 1);   //根据状态切换认证专家级别
     },
     //获取并渲染人才列表数据
     handleGetTeacherList(id, areaId, page) {
@@ -292,15 +293,6 @@ export default {
     },
     //点击查询
     handleinquire() {
-      //   todo
-      console.log(
-        "=======>>> 查询哦, 这儿这个就是你要查询传递的参数, 看看对不对",
-        this.paramsSelect
-      );
-      // 我看你接口要的字段是 gradeid 和 areaid  , 你在这儿也可以命名成这两个噻
-      // this.paramsSelect = { gradeid: 'xxx', areaid: 'xxx'}
-      // 用的时候就可以直接 {...this.paramsSelect} 了,方便一些
-      // this.handleGetTeacherList(this.paramsSelect.gradeid, this.paramsSelect.areaid, 1);
       // this.handleGetTeacherList(this.paramsSelect.level, this.paramsSelect.region, 1);
       this.handleGetTeacherList(this.activeKey, this.paramsSelect.region, 1);
     },
@@ -379,6 +371,7 @@ export default {
     background: #f78b14;
     border-radius: 8px;
     color: #ffffff;
+    cursor: pointer;
   }
 }
 .talent-page {
@@ -463,17 +456,6 @@ export default {
           font-size: 24px;
         }
       }
-      // select {
-      //   /*取消默认箭头开始*/
-      //   appearance: none;
-      //   -moz-appearance: none;
-      //   -webkit-appearance: none;
-      //   /*取消默认箭头结束*/
-      //   text-align-last: center; /* 文本居中*/
-      //   @include imgurl("/sprite.png");
-      //   background-position: -510px -230px;
-      // }
-
       .area {
         margin: 0 60px 0 20px;
       }

@@ -1,6 +1,6 @@
 <template>
   <ul class="floatwindow">
-    <li self-key="contact">
+    <li>
       <div class="box">
         <div class="floatLeft">
           <div class="dianhua">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </li>
-    <li self-key="telephone">
+    <li>
       <div class="box">
         <div class="floatLeft">
           <div class="phone">
@@ -29,39 +29,62 @@
         </div>
       </div>
     </li>
-    <li self-key="wechat">
+    <li>
       <div class="box">
         <div class="floatLeft">
           <div class="wc">
             <div class="title">
               <span></span>官方微信
             </div>
-            <img class="ewm" :src="$imgUrl('/ewm.png')" alt="">
+            <img class="ewm" :src="$imgUrl('/ewm.png')" alt />
           </div>
         </div>
       </div>
     </li>
-    <li self-key="complaint">
+    <li>
       <div class="box">
         <div class="floatLeft">
           <div class="from">
             <div class="title">
               <span></span>投诉建议
             </div>
-            <el-form ref="complaintForm" :model="formValues">
+            <el-form ref="suggestForm" :model="suggestForm" :rules="suggestRule">
               <div class="name">
-                <input v-model="formValues.name" type="text" placeholder="姓名" id="name">
+                <el-form-item prop="name">
+                  <el-input
+                    v-model="suggestForm.name"
+                    type="text"
+                    placeholder="姓名"
+                    auto-complete="off"
+                  ></el-input>
+                </el-form-item>
               </div>
               <div class="name">
-                <input v-model="formValues.phone" type="text" placeholder="电话" id="phone">
+                <el-form-item prop="phone">
+                  <el-input
+                    v-model="suggestForm.phone"
+                    type="text"
+                    placeholder="电话"
+                    auto-complete="off"
+                  ></el-input>
+                </el-form-item>
               </div>
               <div class="suggest">
-                <textarea v-model="formValues.suggest" name="" placeholder="投诉建议：" id="suggest"></textarea>
+                <el-form-item prop="suggest">
+                  <el-input
+                    v-model="suggestForm.suggest"
+                    type="textarea"
+                    placeholder="投诉建议："
+                    auto-complete="off"
+                  ></el-input>
+                </el-form-item>
               </div>
-              <!-- 对比一下此处加了防抖函数后的区别，以及两种防抖引入方式的对比 -->
-              <a href="javascript:" class="submit" @click="() => debounce(onSubmit, 500)()" id="r-submit">提交</a>
-              <!-- <a href="javascript:" class="submit" @click="() => $utils.debounce(onSubmit, 500)()" id="r-submit">提交</a> -->
-              <!-- <a href="javascript:" class="submit" @click="onSubmit" id="r-submit">提交</a> -->
+              <a
+                href="javascript:"
+                class="submit"
+                @click="() => debounce(onSubmit, 500)()"
+                id="r-submit"
+              >提交</a>
             </el-form>
           </div>
         </div>
@@ -70,30 +93,81 @@
   </ul>
 </template>
 <script>
-import { debounce as deb } from '@/config/utils'
+import { debounce as deb } from "@/config/utils";
+import { isvalidPhone } from "@/config/validate";
+import { submitSuggest } from "@/api/home/home";
+
+//定义一个全局变量
+const validPhone = (rule, value, callback) => {
+  if (!value) {
+    callback(new Error("请输入电话号码"));
+  } else if (!isvalidPhone(value)) {
+    callback(new Error("请输入正确的手机号码"));
+  } else {
+    callback();
+  }
+};
+
 export default {
   data() {
     return {
-      formValues: {
-        name: '',     // 姓名
-        phone: '',    // 电话
-        suggest: '',  // 投诉建议
+      suggestForm: {
+        name: "", // 姓名
+        phone: "", // 电话
+        suggest: "" // 投诉建议
+      },
+      suggestRule: {
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        phone: [{ validator: validPhone, trigger: "blur" }], //这里需要全局变量
+        suggest: [
+          { required: true, message: "请输入投诉建议", trigger: "blur" }
+        ]
       }
     };
   },
-  mounted() {
-    console.log(this.$utils.debounce, '=====>>> 挂在原型上的工具函数使用')
-  },
   methods: {
     debounce(func, delay, params) {
-      return deb(func, delay, params)
+      return deb(func, delay, params);
     },
     onSubmit() {
-      console.log(this.formValues, '提交建议的数据')
+      this.$refs.suggestForm.validate(valid => {
+        if (valid) {
+          submitSuggest({
+            name: this.suggestForm.name,
+            phone: this.suggestForm.phone,
+            suggest: this.suggestForm.suggest
+          }).then(res => {
+            (this.suggestForm.name = ""),
+            (this.suggestForm.phone = ""),
+            (this.suggestForm.suggest = "");
+          });
+        } else {
+          console.log("error submit");
+          return false;
+        }
+      });
     }
   }
 };
 </script>
+<style lang="scss">
+.floatwindow {
+  .el-input__inner {
+    padding: 0 7px;
+    height: 30px;
+    line-height: 30px;
+    border-color: #888;
+  }
+  .el-textarea__inner {
+    padding: 0 7px;
+    height: 60px;
+    border-color: #888;
+  }
+  .el-form-item__content {
+    line-height: 30px;
+  }
+}
+</style>
 <style lang="scss" scoped>
 .floatwindow {
   position: fixed;
@@ -201,28 +275,7 @@ export default {
           }
         }
         .name {
-          width: 120px;
-          height: 28px;
-          padding-left: 7px;
-          line-height: 28px;
-          border: 1px solid #888;
-          border-radius: 4px;
           margin-top: 5px;
-          input {
-            width: 100%;
-          }
-        }
-        .suggest {
-          width: 120px;
-          height: 60px;
-          padding: 4px 0 0 7px;
-          border: 1px solid #888;
-          border-radius: 4px;
-          margin-top: 5px;
-          textarea {
-            width: 100%;
-            height: 40px;
-          }
         }
         .submit {
           width: 50px;
@@ -237,16 +290,13 @@ export default {
         }
       }
     }
-    .active {
-      margin-right: 10px;
-    }
   }
   li:hover .floatLeft {
     margin-right: 10px;
   }
-  li .box:hover .floatLeft {
-    margin-right: 10px;
-  }
+  // li .box:hover .floatLeft {
+  //   margin-right: 10px;
+  // }
   li:nth-child(1) {
     background-position: 0px -50px;
     &:hover {

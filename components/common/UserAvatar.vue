@@ -2,30 +2,30 @@
   <div>
     <ul v-if="!isLogin" class="register-login fr">
       <li>
-        <a href="/register">注册</a>
+        <nuxt-link to="/register">注册</nuxt-link>
       </li>
       <li>|</li>
       <li>
-        <a href="/login">登录</a>
+        <nuxt-link to="/login">登录</nuxt-link>
       </li>
     </ul>
     <section v-else class="register-login fr center">
       <p v-html="loginInfo.username"></p>
       <ul class="person-center">
         <li>
-          <a href="">个人中心</a>
+          <nuxt-link to>个人中心</nuxt-link>
         </li>
         <li>
-          <a href="">我的设置</a>
+          <nuxt-link to>我的设置</nuxt-link>
         </li>
         <li>
-          <a href="">财务中心</a>
+          <nuxt-link to>财务中心</nuxt-link>
         </li>
         <li>
-          <a href="">我的课程</a>
+          <nuxt-link to>我的课程</nuxt-link>
         </li>
-        <li >
-          <a href="" @click="logout">退出</a>
+        <li>
+          <a href="javascript:" @click="logout">退出</a>
         </li>
       </ul>
     </section>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import axios from "@/config/axios";
+import { loginOut } from "@/api/login/";
 export default {
   name: "UserAvatar",
   data() {
@@ -49,9 +49,7 @@ export default {
 
       if (authKey && sessionId) {
         this.isLogin = true;
-        this.loginInfo =
-          JSON.parse(window.localStorage.getItem("loginInfo")) || {};
-        console.log(this.loginInfo, "----->>>>>>");
+        this.loginInfo = JSON.parse(window.localStorage.getItem("loginInfo")) || {};
       } else {
         this.isLogin = false;
       }
@@ -59,13 +57,17 @@ export default {
   },
   methods: {
     logout() {
+      // todo logout接口
       if (process.browser) {
-        // todo logout接口
-
-        window.localStorage.removeItem("authKey");
-        window.localStorage.removeItem("sessionId");
-        window.localStorage.removeItem("loginInfo");
-        this.isLogin = false;
+        loginOut({
+          authKey: window.localStorage.getItem("authKey"),
+          sessionId: window.localStorage.getItem("sessionId")
+        }).then(res => {
+          window.localStorage.removeItem("authKey");
+          window.localStorage.removeItem("sessionId");
+          window.localStorage.removeItem("loginInfo");
+          this.isLogin = false;
+        });
       }
     }
   }
@@ -98,7 +100,7 @@ export default {
   position: absolute;
   top: 40px;
   left: 0;
-  z-index: 2;
+  z-index: 10;
   li {
     width: 100%;
     line-height: 40px;

@@ -14,3 +14,10 @@ export const getNewsArticle = (params = {}) => axios({
   params
 })
 
+//新闻详情
+export const getArticleDetail = (params = {}) => axios({
+  url: '/article/getArticleDetail',
+  method: 'get',
+  params
+})
+

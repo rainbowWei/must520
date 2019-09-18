@@ -20,12 +20,42 @@ export const getCourseClassify = (params = {}) =>{
 }
 
 //获取课程列表
+
 export const getCourseLists = (params = {}) =>{
   return axios({
     url: '/course/getcourse',
     method: 'get',
     params
-
   })
 }
 
+//获取讲师数据
+
+export const getCourseTeacher = (params = {}) =>{
+  return axios({
+    url: '/course/getCourseTeacher',
+    method: 'get',
+    params
+  })
+}
+
+
+//获取课程目录
+ export const getCourseChapter = (params = {}) =>{
+   return axios({
+     url: '/course/getCourseChapter',
+     method: 'get',
+     params
+   })
+ }
+
+ //获取课程详情
+ export const getCourseDetail = (params = {}) =>{
+   return axios({
+     url:'/course/getCourseDetail',
+     method: 'get',
+     params
+   })
+   
+ }
+ 

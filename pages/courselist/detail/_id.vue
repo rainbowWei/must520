@@ -8,22 +8,25 @@
           </a>
         </div>
         <div class="right">
-          <div class="course-title">MUST孤独症家庭干预系统课程</div>
+          <div class="course-title">{{coursedetail.course_name}}</div>
           <div class="course-inf clearfix">
             <div class="speaker fl">
-              <span>主讲人：</span>杜佳楣
+              <span>主讲人：</span>
+              {{coursedetail.teacher_name}}
             </div>
             <div class="duration fl">
-              <span>课程时长：</span>35分19秒
+              <span>课程时长：</span>
+              {{coursedetail.totlatime}}
             </div>
-            <div class="price fr">￥6988</div>
+            <div class="price fr">￥{{coursedetail.price}}</div>
           </div>
           <div class="certificate">
             <i></i>
             <span>证书：</span>《孤独症康复教育上岗培训合格证书》
           </div>
           <div class="synopsis">
-            <span>课程简介：</span> 高级MUST专家高级MUST专家高级MUST专家高级MUST专家级MUST专家高级MUST专家高级MUST专家高级MUST专家
+            <span>课程简介：</span>
+            {{coursedetail.intro}}
           </div>
           <div class="tips">培训结束后，可以参加中国残疾人康复协会组织的孤独症康复教育上岗培训考试考试合格者获得中国残疾人康复协会承认的孤独症康复教育上岗培训合格证。</div>
           <div class="button">
@@ -41,21 +44,41 @@
       <div class="detail-con">
         <div class="catalogue">
           <div class="header">课程目录</div>
+          <div class="catalogue-con">
+            <!-- v-for="chapter in coursechapter" :key = chapter.id -->
+            <div class="courseList_box" >
+              <div class="title"></div>
+              <!-- {{chapter.chapter_name}} -->
+              <!-- <ul>
+                <li>
+                  <nuxt-link :to="`/courseList/detail/${newcourse.id}`">课程目录</nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link :to="`/courseList/detail/${newcourse.id}`">课程目录</nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link :to="`/courseList/detail/${newcourse.id}`">课程目录</nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link :to="`/courseList/detail/${newcourse.id}`">课程目录</nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link :to="`/courseList/detail/${newcourse.id}`">课程目录</nuxt-link>
+                </li>
+              </ul> -->
+            </div>
+          </div>
         </div>
         <div class="lecturer">
           <div class="img-box">
             <div class="img-bg">
-              <img :src="$imgUrl('/course/founder.png')" alt />
+              <img :src="courseteacher.cover" alt />
             </div>
           </div>
           <div class="founder">
             <h3>讲师简介</h3>
-            <div class="name">杜佳楣</div>
-            <div class="text">
-              MUST行为引导技术创始人
-              <br />硕士研究生 北京信息科技大学教师
-              <br />著有：《当爱遇上孤独》、《ABA改变孤独症》
-            </div>
+            <div class="name">{{courseteacher.name}}</div>
+            <div class="text" v-html="courseteacher.description"></div>
           </div>
           <div class="comment">
             <h3>课程点评</h3>
@@ -69,7 +92,7 @@
                 </div>
               </div>
             </div>
-            <a href="javascript:" class="submit" >我要点评</a>
+            <a href="javascript:" class="submit">我要点评</a>
           </div>
         </div>
       </div>
@@ -77,24 +100,61 @@
   </div>
 </template>
 <script>
+import {
+  getCourseTeacher,
+  getCourseChapter,
+  getCourseDetail
+} from "@/api/course/course";
 export default {
-  data(){
+  data() {
     return {
-      count:0,
-      liked:false,
+      count: 0,
+      liked: false,
+      courseteacher: [], //课程讲师
+      coursedetail: [], //课程详情
+      coursechapter: [] //课程目录带章节
+    };
+  },
+  created() {
+    if (process.browser) {
+      this.getCourseInf();
     }
   },
-  methods:{
-    toggleLink(){
-      if(!this.liked){
+  computed: {
+    //课程目录
+    newsCourseCatalog() {
+      return this.coursechapter.catalog || [];
+    }
+  },
+  methods: {
+    toggleLink() {
+      if (!this.liked) {
         this.count++;
-      }else{
+      } else {
         this.count--;
         this.liked = !this.liked;
       }
+    },
+    getCourseInf() {
+      let str = window.location.href;
+      let index = str.lastIndexOf("/");
+      str = str.substring(index + 1, str.length); //截取地址栏的id值
+      //获取讲师信息
+      getCourseTeacher({ id: str }).then(res => {
+        this.courseteacher = res.data;
+      });
+      //获取课程详情
+      getCourseDetail({ id: str }).then(res => {
+        this.coursedetail = res.data;
+      });
+      //获取课程目录
+      getCourseChapter({ id: str }).then(res => {
+        this.coursechapter = res.data;
+        console.log(res.data,"______")
+      });
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .course-detail {
@@ -235,6 +295,22 @@ export default {
         text-align: center;
         color: #fff;
       }
+      .catalogue-con {
+        width: 100%;
+        padding: 0 52px;
+      }
+      .courseList_box {
+        padding-top: 15px;
+        .title {
+          border-bottom: 2px solid #e8e8e8;
+          font-size: 24px;
+        }
+        li {
+          line-height: 57px;
+          font-size: 18px;
+          padding-left: 22px;
+        }
+      }
     }
     .lecturer {
       float: right;
@@ -262,6 +338,8 @@ export default {
         margin-left: -150px;
         background: #ffefd5;
         img {
+          width: 100%;
+          height: 100%;
           position: absolute;
           right: 0;
           bottom: 0;

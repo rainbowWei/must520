@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       courseclassifies: [], //课程分类列表
-      courseList: [], //课程列表数据
+      courseList: [], //课程列表数据带分页
       indicatorIndex: 0, // 走马灯当前活动的banner下标
       courseclassifyIndex: "", // 课程分类当前活动的下标
       pageInfo: {

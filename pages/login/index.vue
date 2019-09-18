@@ -39,8 +39,8 @@
             </div>
           </div>
           <div class="button">
-            <nuxt-view :loading="logining" class="btn" @click="handleLogin()">登录</nuxt-view>
-            <nuxt-view class="reg-btn btn" @click="zcClick()">注册</nuxt-view>
+            <a :loading="logining" class="btn" @click="handleLogin()">登录</a>
+            <a class="reg-btn btn" @click="zcClick()">注册</a>
           </div>
         </div>
       </el-form>
@@ -93,7 +93,8 @@ export default {
                   localStorage.setItem("sessionId", res.data.sessionId);
                   localStorage.setItem("loginInfo", JSON.stringify(res.data.userInfo))
                   //登录成功跳到首页
-                  this.$router.push("/");
+                  this.$router.replace("/");
+                  this.$router.go(0); //刷新页面
                 }
               } else if (res.code === 400) {
                 this.$message({

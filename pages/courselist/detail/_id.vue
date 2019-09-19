@@ -41,31 +41,29 @@
       </div>
     </div>
     <div class="content">
-      <div class="detail-con">
+      <div class="detail-con clearfix">
         <div class="catalogue">
           <div class="header">课程目录</div>
           <div class="catalogue-con">
-            <!-- v-for="chapter in coursechapter" :key = chapter.id -->
-            <div class="courseList_box" >
-              <div class="title"></div>
-              <!-- {{chapter.chapter_name}} -->
-              <!-- <ul>
-                <li>
-                  <nuxt-link :to="`/courseList/detail/${newcourse.id}`">课程目录</nuxt-link>
+            <div
+              class="courseList_box"
+              v-for="(chapter , index) of coursechapter"
+              :key="chapter.id"
+            >
+              <div class="chapter-title clearfix" @click="chapterShrink(index)">
+                <div class="tit">{{chapter.chapter_name}}</div>
+                <div class="icon" ref="icon">
+                  <i class="iconfont icon-jiantouxia"></i>
+                </div>
+              </div>
+              <ul class="list" ref="childList">
+                <li v-for="catalog in chapter.catalog" :key="catalog.id">
+                  <span class="title">{{catalog.video_name}}</span>
+                  <span class="time">{{catalog.video_time}}</span>
+                  <span class="study-status"></span>
+                  <nuxt-link :to="`/courseList/watch/${catalog.id}`"></nuxt-link>
                 </li>
-                <li>
-                  <nuxt-link :to="`/courseList/detail/${newcourse.id}`">课程目录</nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link :to="`/courseList/detail/${newcourse.id}`">课程目录</nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link :to="`/courseList/detail/${newcourse.id}`">课程目录</nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link :to="`/courseList/detail/${newcourse.id}`">课程目录</nuxt-link>
-                </li>
-              </ul> -->
+              </ul>
             </div>
           </div>
         </div>
@@ -83,11 +81,19 @@
           <div class="comment">
             <h3>课程点评</h3>
             <div class="comment-con">
-              <div class="item clearfix">
-                <div class="photo"></div>
-                <div class="text">老师讲的很不错，赞！老师讲的很不错，赞！老师讲的很不错，赞！</div>
-                <div class="icon noStyle" @click="toggleLink">
-                  <span>{{count}}</span>
+              <div
+                class="item clearfix"
+                v-for="comment in coursecomment.slice(0, 6)"
+                :key="comment.id"
+              >
+                <nuxt-link :to="`/courseList/comment/${comment.id}`">
+                  <div class="photo">
+                    <img :src="comment.cover" alt />
+                  </div>
+                  <div class="text">{{comment.content}}</div>
+                </nuxt-link>
+                <div class="icon noStyle" @click="toggleLink(comment.id)">
+                  <span>{{comment.praise}}</span>
                   <i></i>
                 </div>
               </div>
@@ -103,16 +109,19 @@
 import {
   getCourseTeacher,
   getCourseChapter,
-  getCourseDetail
+  getCourseDetail,
+  getCourseComment,
+  getCommentPraise
 } from "@/api/course/course";
 export default {
   data() {
     return {
-      count: 0,
       liked: false,
       courseteacher: [], //课程讲师
       coursedetail: [], //课程详情
-      coursechapter: [] //课程目录带章节
+      coursechapter: [], //课程目录带章节
+      coursecomment: [], //点评列表
+      praise: null //点赞数
     };
   },
   created() {
@@ -120,20 +129,16 @@ export default {
       this.getCourseInf();
     }
   },
-  computed: {
-    //课程目录
-    newsCourseCatalog() {
-      return this.coursechapter.catalog || [];
-    }
-  },
   methods: {
-    toggleLink() {
-      if (!this.liked) {
-        this.count++;
-      } else {
-        this.count--;
-        this.liked = !this.liked;
-      }
+    toggleLink(id) {
+      getCommentPraise({ commentid: id }).then(res => {
+        if (res.code === 200) {
+          let comment = this.coursecomment;
+          for (var i = 0; i < comment.length; i++) {
+            comment[i].praise++
+          }
+        }
+      });
     },
     getCourseInf() {
       let str = window.location.href;
@@ -148,10 +153,27 @@ export default {
         this.coursedetail = res.data;
       });
       //获取课程目录
-      getCourseChapter({ id: str }).then(res => {
+      getCourseChapter({
+        id: str,
+        authKey: window.localStorage.getItem("authKey"),
+        sessionId: window.localStorage.getItem("sessionId")
+      }).then(res => {
         this.coursechapter = res.data;
-        console.log(res.data,"______")
       });
+      //获取点评列表
+      getCourseComment({ id: str }).then(res => {
+        this.coursecomment = res.data;
+      });
+    },
+    //课程目录的收缩
+    chapterShrink(index) {
+      if (this.$refs.childList[index].style.display === "none") {
+        this.$refs.childList[index].style.display = "block";
+        this.$refs.icon[index].style.transform = "rotateX(180deg)";
+      } else {
+        this.$refs.childList[index].style.display = "none";
+        this.$refs.icon[index].style.transform = "rotateX(0deg)";
+      }
     }
   }
 };
@@ -279,13 +301,11 @@ export default {
   }
   .detail-con {
     width: 100%;
-    height: 1273px;
-    padding: 220px 0 120px 0;
+    min-height: 1600px;
+    padding: 220px 0 120px;
     .catalogue {
       width: 800px;
-      height: 100%;
       float: left;
-      background: #ef8200;
       .header {
         width: 100%;
         height: 60px;
@@ -297,25 +317,54 @@ export default {
       }
       .catalogue-con {
         width: 100%;
-        padding: 0 52px;
+        padding: 0 52px 15px;
+        border: 2px solid #f0f0f0;
       }
       .courseList_box {
         padding-top: 15px;
-        .title {
+        .chapter-title {
           border-bottom: 2px solid #e8e8e8;
           font-size: 24px;
+          padding-right: 15px;
+          cursor: pointer;
+          .tit {
+            float: left;
+          }
+          .icon {
+            float: right;
+          }
         }
-        li {
-          line-height: 57px;
-          font-size: 18px;
-          padding-left: 22px;
+        .list {
+          display: none;
+          li {
+            line-height: 57px;
+            font-size: 18px;
+            padding-left: 22px;
+            span {
+              display: inline-block;
+            }
+            .title {
+              width: 410px;
+            }
+            .time {
+              width: 100px;
+              text-align: center;
+            }
+            .study-status {
+              width: 120px;
+            }
+            a {
+              &:hover {
+                color: #ef8200;
+              }
+            }
+          }
         }
       }
     }
     .lecturer {
       float: right;
       width: 384px;
-      height: 100%;
 
       .img-box {
         width: 330px;
@@ -371,21 +420,25 @@ export default {
         .photo {
           width: 40px;
           height: 41px;
-          @include imgurl("/sprite.png");
-          background-position: -491px -100px;
           float: left;
           margin: 5px 15px 0;
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
         .text {
           width: 245px;
           font-size: 14px;
           line-height: 26px;
           float: left;
+          @include ellipsis(2);
+          overflow: hidden;
         }
         .icon {
           float: left;
           height: 100%;
-          width: 50px;
+          width: 60px;
           position: relative;
           cursor: pointer;
           span {

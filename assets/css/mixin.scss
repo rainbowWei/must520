@@ -1,4 +1,5 @@
 @import './variables.scss';
+@import './iconfont.scss';
 
 @mixin size($w, $h: $w) {
   width: $w;

@@ -55,7 +55,26 @@ export const getCourseTeacher = (params = {}) =>{
      url:'/course/getCourseDetail',
      method: 'get',
      params
-   })
-   
+   }) 
  }
+
+ //获取点评列表
+ export const getCourseComment = (params = {}) =>{
+   return axios({
+     url: '/course/getCourseComment',
+     method: 'get',
+     params
+   })
+ }
+
+ //获取点赞数
+
+ export const getCommentPraise = (params = {}) =>{
+   return axios({
+     url: '/commentPraise',
+     method: 'get',
+     params
+   })
+ }
+
  

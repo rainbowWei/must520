@@ -58,10 +58,11 @@
               </div>
               <ul class="list" ref="childList">
                 <li v-for="catalog in chapter.catalog" :key="catalog.id">
-                  <span class="title">{{catalog.video_name}}</span>
-                  <span class="time">{{catalog.video_time}}</span>
-                  <span class="study-status"></span>
-                  <nuxt-link :to="`/courseList/watch/${catalog.id}`"></nuxt-link>
+                  <nuxt-link :to="`/courseList/watch/${catalog.id}`">
+                    <span class="title">{{catalog.video_name}}</span>
+                    <span class="time">{{SecondToDate(catalog.video_time)}}</span>
+                    <span class="study-status"></span>
+                  </nuxt-link>
                 </li>
               </ul>
             </div>
@@ -83,7 +84,7 @@
             <div class="comment-con">
               <div
                 class="item clearfix"
-                v-for="comment in coursecomment.slice(0, 6)"
+                v-for="(comment , index) of  coursecomment.slice(0, 4)"
                 :key="comment.id"
               >
                 <nuxt-link :to="`/courseList/comment/${comment.id}`">
@@ -92,7 +93,7 @@
                   </div>
                   <div class="text">{{comment.content}}</div>
                 </nuxt-link>
-                <div class="icon noStyle" @click="toggleLink(comment.id)">
+                <div class="icon noStyle" @click="() => toggleLink(comment.id, index)">
                   <span>{{comment.praise}}</span>
                   <i></i>
                 </div>
@@ -116,7 +117,6 @@ import {
 export default {
   data() {
     return {
-      liked: false,
       courseteacher: [], //课程讲师
       coursedetail: [], //课程详情
       coursechapter: [], //课程目录带章节
@@ -130,13 +130,11 @@ export default {
     }
   },
   methods: {
-    toggleLink(id) {
+    toggleLink(id, index) {
       getCommentPraise({ commentid: id }).then(res => {
         if (res.code === 200) {
           let comment = this.coursecomment;
-          for (var i = 0; i < comment.length; i++) {
-            comment[i].praise++
-          }
+          comment[index].praise++;
         }
       });
     },
@@ -144,6 +142,7 @@ export default {
       let str = window.location.href;
       let index = str.lastIndexOf("/");
       str = str.substring(index + 1, str.length); //截取地址栏的id值
+      window.localStorage.setItem("courseId", str);
       //获取讲师信息
       getCourseTeacher({ id: str }).then(res => {
         this.courseteacher = res.data;
@@ -159,6 +158,11 @@ export default {
         sessionId: window.localStorage.getItem("sessionId")
       }).then(res => {
         this.coursechapter = res.data;
+        window.localStorage.setItem(
+          "chapter",
+          JSON.stringify(this.coursechapter)
+        );
+        console.log(res.data, "+++++++++++++++++++++");
       });
       //获取点评列表
       getCourseComment({ id: str }).then(res => {
@@ -174,6 +178,62 @@ export default {
         this.$refs.childList[index].style.display = "none";
         this.$refs.icon[index].style.transform = "rotateX(0deg)";
       }
+    },
+    //将秒转化成时分秒
+    SecondToDate: function(msd) {
+      var time = msd;
+
+      if (null != time && "" != time) {
+        if (time > 60 && time < 60 * 60) {
+          time =
+            parseInt(time / 60.0) +
+            ":" +
+            parseInt((parseFloat(time / 60.0) - parseInt(time / 60.0)) * 60);
+        } else if (time >= 60 * 60 && time < 60 * 60 * 24) {
+          time =
+            parseInt(time / 3600.0) +
+            ":" +
+            parseInt(
+              (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
+            ) +
+            ":" +
+            parseInt(
+              (parseFloat(
+                (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
+              ) -
+                parseInt(
+                  (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
+                )) *
+                60
+            );
+        } else if (time >= 60 * 60 * 24) {
+          time =
+            parseInt(time / 3600.0 / 24) +
+            ":" +
+            parseInt(
+              (parseFloat(time / 3600.0 / 24) - parseInt(time / 3600.0 / 24)) *
+                24
+            ) +
+            ":" +
+            parseInt(
+              (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
+            ) +
+            ":" +
+            parseInt(
+              (parseFloat(
+                (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
+              ) -
+                parseInt(
+                  (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
+                )) *
+                60
+            );
+        } else {
+          time = parseInt(time);
+        }
+      }
+
+      return time;
     }
   }
 };

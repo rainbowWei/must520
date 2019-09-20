@@ -77,4 +77,21 @@ export const getCourseTeacher = (params = {}) =>{
    })
  }
 
+
+//视频播放
+export const getCourseWatch = (params = {}) =>{
+  return axios({
+    url: '/course/watch',
+    method: 'get',
+    params
+  })
+}
  
+//评论以及回复
+export const getCommentAnswer = (params = {}) =>{
+  return axios({
+    url: '/getcomment',
+    method: 'get',
+    params
+  })
+}

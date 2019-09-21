@@ -87,7 +87,7 @@
                   </div>
                   <div class="time fr">
                     <span>认证时间：</span>
-                    {{teacher.created_at | formatDate}}
+                    {{teacher.created_at | formatDate('yyyy-MM-dd')}}
                   </div>
                 </div>
               </div>
@@ -168,7 +168,6 @@ import {
   getTeacherList,
   submitMessage
 } from "@/api/talent/";
-import { formatDate } from "@/assets/js/date";
 import{isvalidPhone,isvalidMailbox} from '@/config/validate';
 
 //定义一个全局变量
@@ -222,14 +221,6 @@ export default {
         remarks: [{ required: true, message: "请输入备注", trigger: "blur" }]
       }
     };
-  },
-  filters: {
-    formatDate(time) {
-      //将时间戳转化为日期格式
-      time = time * 1000;
-      let date = new Date(time);
-      return formatDate(date, "yyyy-MM-dd");
-    }
   },
   created() {
     this.handleGetTeacherList();

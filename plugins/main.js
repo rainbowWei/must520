@@ -6,6 +6,7 @@ import * as utils from '@/config/utils'
 // 全局注册自定义组件
 Vue.component(Icon.name, Icon)
 Vue.component(Button.name, Button)
+Vue.filter('formatDate', utils.formatDate)
 
 // vue-awesome-swiper 
 if (process.browser) {

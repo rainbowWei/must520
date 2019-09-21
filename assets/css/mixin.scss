@@ -19,20 +19,20 @@
   align-items: center;
 }
 
+%ellipsis-basic {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 // 文字溢出点点点
 @mixin ellipsis($row:1) {
   @if $row == 1 {
-    @extend %ellipsis-basic;
     white-space: nowrap;
-  }@else {
     @extend %ellipsis-basic;
+  }@else {
     display: -webkit-box;
     -webkit-line-clamp: $row;
     -webkit-box-orient: vertical;
-  }
-  %ellipsis-basic{
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @extend %ellipsis-basic;
   }
 }
 

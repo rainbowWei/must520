@@ -4,7 +4,7 @@
       <div class="buy-popup">
         <div class="left">
           <a href="javascript:">
-            <img :src="$imgUrl('/course/banner.jpg')" alt />
+            <img :src="$imgUrl('/course/banner.jpg')" alt="">
           </a>
         </div>
         <div class="right">
@@ -44,34 +44,18 @@
       <div class="detail-con clearfix">
         <div class="catalogue">
           <div class="header">课程目录</div>
-          <div class="catalogue-con">
-            <div
-              class="courseList_box"
-              v-for="(chapter , index) of coursechapter"
-              :key="chapter.id"
-            >
-              <div class="chapter-title clearfix" @click="chapterShrink(index)">
-                <div class="tit">{{chapter.chapter_name}}</div>
-                <div class="icon" ref="icon">
-                  <i class="iconfont icon-jiantouxia"></i>
-                </div>
-              </div>
-              <ul class="list" ref="childList">
-                <li v-for="catalog in chapter.catalog" :key="catalog.id">
-                  <nuxt-link :to="`/courseList/watch/${catalog.id}`">
-                    <span class="title">{{catalog.video_name}}</span>
-                    <span class="time">{{SecondToDate(catalog.video_time)}}</span>
-                    <span class="study-status"></span>
-                  </nuxt-link>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <el-tree
+            :data="coursechapter"
+            :props="defaultProps"
+            accordion
+            @node-click="handleNodeClick"
+            :render-content="renderContent"
+          ></el-tree>
         </div>
         <div class="lecturer">
           <div class="img-box">
             <div class="img-bg">
-              <img :src="courseteacher.cover" alt />
+              <img :src="courseteacher.cover" alt="">
             </div>
           </div>
           <div class="founder">
@@ -89,7 +73,7 @@
               >
                 <nuxt-link :to="`/courseList/comment/${comment.id}`">
                   <div class="photo">
-                    <img :src="comment.cover" alt />
+                    <img :src="comment.cover" alt="">
                   </div>
                   <div class="text">{{comment.content}}</div>
                 </nuxt-link>
@@ -119,9 +103,14 @@ export default {
     return {
       courseteacher: [], //课程讲师
       coursedetail: [], //课程详情
-      coursechapter: [], //课程目录带章节
       coursecomment: [], //点评列表
-      praise: null //点赞数
+      praise: null, //点赞数
+      //课程目录带章节
+      coursechapter: [],
+      defaultProps: {
+        children: "children",
+        label: "label"
+      }
     };
   },
   created() {
@@ -130,6 +119,52 @@ export default {
     }
   },
   methods: {
+    renderContent(h, { data, store }) {
+      if (data.chapter_name) {
+        return <div>{data.label}</div>;
+      } else {
+        return (
+          <div class="course-catalog">
+            <p class="course-catalog-name">{data.label}</p>
+            <p class="course-catalog-control">
+              <span>{this.$utils.SecondToDate(data.video_time)}</span>
+              <span>
+                {"学习中"}
+                <el-icon class="el-icon-success course-catalog-control-learning course-catalog-control-status" />
+              </span>
+            </p>
+          </div>
+        );
+      }
+    },
+    // 格式化课程目录
+    formatCourseChapter(catalogue) {
+      return catalogue.map(ca => {
+        if (ca.catalog) {
+          const children = this.formatCourseChapter(ca.catalog);
+          if (ca.chapter_name !== undefined) {
+            return { ...ca, children, label: ca.chapter_name };
+          } else if (ca.video_name !== undefined) {
+            return { ...ca, children, label: <p>{ca.video_name}</p> };
+          } else {
+            return {};
+          }
+        } else {
+          if (ca.chapter_name !== undefined) {
+            return { ...ca, label: ca.chapter_name };
+          } else if (ca.video_name !== undefined) {
+            return { ...ca, label: ca.video_name };
+          } else {
+            return {};
+          }
+        }
+      });
+    },
+    handleNodeClick(data) {
+      if (data.video_name) {
+        this.$router.push(`/courseList/watch/${data.id}`);
+      }
+    },
     toggleLink(id, index) {
       getCommentPraise({ commentid: id }).then(res => {
         if (res.code === 200) {
@@ -157,12 +192,11 @@ export default {
         authKey: window.localStorage.getItem("authKey"),
         sessionId: window.localStorage.getItem("sessionId")
       }).then(res => {
-        this.coursechapter = res.data;
+        this.coursechapter = this.formatCourseChapter(res.data);
         window.localStorage.setItem(
           "chapter",
           JSON.stringify(this.coursechapter)
         );
-        console.log(res.data, "+++++++++++++++++++++");
       });
       //获取点评列表
       getCourseComment({ id: str }).then(res => {
@@ -178,66 +212,46 @@ export default {
         this.$refs.childList[index].style.display = "none";
         this.$refs.icon[index].style.transform = "rotateX(0deg)";
       }
-    },
-    //将秒转化成时分秒
-    SecondToDate: function(msd) {
-      var time = msd;
-
-      if (null != time && "" != time) {
-        if (time > 60 && time < 60 * 60) {
-          time =
-            parseInt(time / 60.0) +
-            ":" +
-            parseInt((parseFloat(time / 60.0) - parseInt(time / 60.0)) * 60);
-        } else if (time >= 60 * 60 && time < 60 * 60 * 24) {
-          time =
-            parseInt(time / 3600.0) +
-            ":" +
-            parseInt(
-              (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
-            ) +
-            ":" +
-            parseInt(
-              (parseFloat(
-                (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
-              ) -
-                parseInt(
-                  (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
-                )) *
-                60
-            );
-        } else if (time >= 60 * 60 * 24) {
-          time =
-            parseInt(time / 3600.0 / 24) +
-            ":" +
-            parseInt(
-              (parseFloat(time / 3600.0 / 24) - parseInt(time / 3600.0 / 24)) *
-                24
-            ) +
-            ":" +
-            parseInt(
-              (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
-            ) +
-            ":" +
-            parseInt(
-              (parseFloat(
-                (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
-              ) -
-                parseInt(
-                  (parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60
-                )) *
-                60
-            );
-        } else {
-          time = parseInt(time);
-        }
-      }
-
-      return time;
     }
   }
 };
 </script>
+<style lang="scss">
+.course-detail {
+  .el-tree-node__content {
+    .course-catalog {
+      display: flex;
+      @include size(95%, 100%);
+      justify-content: space-between;
+      align-items: center;
+      .course-catalog-name {
+        flex: 1;
+        max-width: 70%;
+        @include ellipsis();
+      }
+      .course-catalog-control {
+        width: 220px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .course-catalog-control-status {
+          margin-left: 8px;
+        }
+        .course-catalog-control-learned {
+          color: #999;
+        }
+        .course-catalog-control-learning {
+          color: #539;
+        }
+        .course-catalog-control-unlearn {
+          color: red;
+        }
+      }
+    }
+  }
+}
+</style>
 <style lang="scss" scoped>
 .course-detail {
   .content {
@@ -493,7 +507,6 @@ export default {
           line-height: 26px;
           float: left;
           @include ellipsis(2);
-          overflow: hidden;
         }
         .icon {
           float: left;

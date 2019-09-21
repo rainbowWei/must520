@@ -192,7 +192,7 @@
             <li v-for=" article in newsarticlelist.slice(1, 9)" :key="article.id">
               <nuxt-link :to="`/newlist/detail/${article.id}`">
                 <h3>{{article.title.substring(0,28)}}</h3>
-                <div class="time">{{article.created_at | formatDate}}</div>
+                <div class="time">{{article.created_at | formatDate('MM-dd')}}</div>
               </nuxt-link>
             </li>
           </ul>
@@ -213,7 +213,7 @@
                 <i></i>
                 {{notice.title.substring(0,28)}}
               </h3>
-              <div class="time">{{notice.created_at | formatDate}}</div>
+              <div class="time">{{notice.created_at | formatDate('MM-dd')}}</div>
             </nuxt-link>
           </li>
         </ul>
@@ -225,7 +225,6 @@
 <script>
 import { getTeacherList } from "@/api/home/home";
 import { getNewsArticle } from "@/api/news/";
-import { formatDate } from "@/assets/js/date";
 
 export default {
   head: {
@@ -272,14 +271,6 @@ export default {
       newsarticlelist: [], //新闻资讯列表
       newsnoticelist: [] //信息公告列表
     };
-  },
-  filters: {
-    formatDate(time) {
-      //将时间戳转化为日期格式
-      time = time * 1000;
-      let date = new Date(time);
-      return formatDate(date, "MM-dd");
-    }
   },
   mounted() {
     this.handlegetTeacherList();

@@ -48,7 +48,7 @@
                   </div>
                   <div class="time fr">
                     <i></i>
-                    {{article.updated_at | formatDate}}
+                    {{article.updated_at | formatDate('yyyy-MM-dd')}}
                   </div>
                 </div>
               </div>
@@ -79,7 +79,6 @@
 
 <script>
 import { getNewsList, getNewsArticle } from "@/api/news/";
-import { formatDate } from "@/assets/js/date";
 
 export default {
   data() {
@@ -94,14 +93,6 @@ export default {
         currentPage: 1
       }
     };
-  },
-  filters: {
-    formatDate(time) {
-      //将时间戳转化为日期格式
-      time = time * 1000;
-      let date = new Date(time);
-      return formatDate(date, "yyyy-MM-dd");
-    }
   },
   created() {
     if (process.browser) {

@@ -24,4 +24,8 @@ $ npm run restart
 $ npm run pm
 ```
 
+## 注意事项
++ css和js的图片根路径不同（js和template中已做处理，统一使用Vue.prototype.$imgUrl，css中使用，需要在@/assets/css/variables.scss中根据环境而改变）
+
+
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

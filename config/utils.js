@@ -67,3 +67,53 @@ export const throttle = (fun, delay = 1000, params) => {
     }
   };
 };
+
+/**
+ * 个位补零 （返回值为字符串）
+ * @param {number} x 不够两位数时，填0补充
+ */
+export const toDou = x => x < 9 ? '0' + x : '' + x;
+/**
+ * 将秒转化成时分秒
+ * @param {number} time 要被格式化的时间
+ */
+export const SecondToDate = (time) => {
+  if (time && time > 0) {
+    const mins = time % 3600; // 分钟和秒的综合
+    const hour = toDou(parseInt(time / 3600));
+    const min = toDou(parseInt(mins / 60));
+    const second = toDou(mins % 60);
+
+    return `${hour}:${min}:${second}`
+  } else {
+    return `00:00:00`;
+  }
+}
+
+export const formatDate = (time, fmt) => {
+  time = time * 1000;
+  const date = new Date(time);
+  console.log(time, '======', date)
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+  }
+  let o = {
+    'M+': date.getMonth() + 1,
+    'd+': date.getDate(),
+    'h+': date.getHours(),
+    'm+': date.getMinutes(),
+    's+': date.getSeconds()
+  };
+  for (let k in o) {
+    if (new RegExp(`(${k})`).test(fmt)) {
+      let str = o[k] + '';
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str));
+    }
+  }
+  return fmt;
+};
+
+
+function padLeftZero (str) {
+  return ('00' + str).substr(str.length);
+};

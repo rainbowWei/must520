@@ -19,7 +19,7 @@
           </span>
           <span class="time">
             <i></i>
-            {{articledetail.created_at | formatDate}}
+            {{articledetail.created_at | formatDate('yyyy年MM月dd日')}}
           </span>
         </div>
         <div class="content" v-html="articledetail.desc"></div>
@@ -77,7 +77,6 @@
 
 <script>
 import { getArticleDetail, getNewsList } from "@/api/news/";
-import { formatDate } from "@/assets/js/date";
 
 export default {
   data() {
@@ -92,14 +91,6 @@ export default {
         { src: "@/assets/img/banner3.jpg" }
       ]
     };
-  },
-  filters: {
-    formatDate(time) {
-      //将时间戳转化为日期格式
-      time = time * 1000;
-      let date = new Date(time);
-      return formatDate(date, "yyyy年MM月dd日");
-    }
   },
   created() {
     if (process.browser) {

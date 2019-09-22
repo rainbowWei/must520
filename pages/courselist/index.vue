@@ -22,7 +22,7 @@
       </ul>
       <ul class="course-list">
         <li v-for="newcourse in newsCourseList" :key="newcourse.id">
-          <nuxt-link :to="`/courseList/detail/${newcourse.id}`">
+          <nuxt-link :to="`/courselist/detail/${newcourse.id}`">
             <div class="course-img">
               <img :src="newcourse.cover" alt="">
             </div>

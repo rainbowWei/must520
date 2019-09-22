@@ -76,7 +76,6 @@ export default {
   created() {
     if (process.browser) {
       this.path = this.getQueryString();
-      console.log(this.catalogues, "=======nav", this.path);
     }
   },
   methods: {
@@ -88,6 +87,7 @@ export default {
 
       // filter find includes
       const catalogue = catalogues.find(catalogue => catalogue.toUrl === path);
+      console.log(this.catalogues, "=======nav", this.path, catalogue, path);
       return catalogue ? catalogue.toUrl : "";
     },
     getUrl(path) {

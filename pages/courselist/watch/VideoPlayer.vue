@@ -15,7 +15,7 @@
 
 <script>
 import { imgUrl } from "@/config/utils";
-import { getCourseChapter } from '@/api/course/course'
+import { getCourseChapter } from "@/api/course/course";
 export default {
   name: "VideoPlayer",
   props: {
@@ -30,9 +30,9 @@ export default {
         autoplay: true, // 是否自动播放
         muted: true, // 是否静音
         language: "en", // 语言
-        playbackRates: [0.7, 1.0, 1.5, 2.0], // 播放倍率
+        playbackRates: [0.7, 1.0, 1.5, 2.0] // 播放倍率
       },
-      timer: null,  // 定时器
+      timer: null // 定时器
     };
   },
   computed: {
@@ -43,7 +43,7 @@ export default {
         sources: [
           {
             type: "video/mp4",
-            src: this.videoSource.video_addr,
+            src: this.videoSource.video_addr
           }
         ],
         poster: imgUrl("/banner.jpg"), // 封面
@@ -53,41 +53,41 @@ export default {
     }
   },
   destroyed() {
-    this.clearUpdate()
+    this.clearUpdate();
   },
   methods: {
     // 关闭更新播放状态
     clearUpdate() {
-      clearInterval(this.timer)
+      clearInterval(this.timer);
       // todo
       getCourseChapter().then(res => {
-        console.log('更新播放状态成功', 22222)
-      })
+        console.log("更新播放状态成功", 22222);
+      });
     },
     // 更新播放状态
     updatePlayerStatus() {
-      this.clearUpdate()
+      this.clearUpdate();
       this.timer = setInterval(() => {
         // todo
         getCourseChapter().then(res => {
-          console.log('更新播放状态成功', 11111)
-        })
-      }, 10000)
+          console.log("更新播放状态成功", 11111);
+        });
+      }, 10000);
     },
     // 播放视频
     onPlayerPlay(player) {
-      console.log('player play!', player)
-      this.updatePlayerStatus()
+      console.log("player play!", player);
+      this.updatePlayerStatus();
     },
     // 暂停播放
     onPlayerPause(player) {
-      console.log('player pause!')
-      this.clearUpdate()
+      console.log("player pause!");
+      this.clearUpdate();
     },
     // 播放结束
     onPlayerEnded(player) {
-      console.log('player ended!')
-      this.clearUpdate()
+      console.log("player ended!");
+      this.clearUpdate();
     },
 
     // or listen state event
@@ -118,6 +118,10 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+  }
+  .vjs-paused .vjs-big-play-button,
+  .vjs-paused.vjs-has-started .vjs-big-play-button {
+    display: block;
   }
 }
 </style>

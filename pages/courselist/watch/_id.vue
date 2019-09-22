@@ -16,7 +16,7 @@
               </div>
               <ul class="list" ref="childList">
                 <li v-for="catalog in chapter.catalog" :key="catalog.id">
-                  <nuxt-link :to="`/courseList/watch/${catalog.id}`">
+                  <nuxt-link :to="`/courselist/watch/${catalog.id}`">
                     <span class="title">{{catalog.video_name}}</span>
                   </nuxt-link>
                 </li>

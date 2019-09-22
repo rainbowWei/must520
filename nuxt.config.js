@@ -25,7 +25,8 @@ module.exports = {
   plugins: [
     '@/plugins/main',
     { src: "@/plugins/element-ui", ssr: true },
-    { src: '@/plugins/video-player', ssr: false }
+    { src: '@/plugins/video-player', ssr: false },
+    { src: '@/plugins/awesome-swiper', ssr: false }
   ],
   /*
   ** Global CSS
@@ -33,7 +34,8 @@ module.exports = {
   css: [
     '~assets/css/reset.css',
     'element-ui/lib/theme-chalk/index.css',
-    'video.js/dist/video-js.css'
+    'video.js/dist/video-js.css',
+    'swiper/dist/css/swiper.css'
   ],
   /*
   ** Nuxt.js dev-modules

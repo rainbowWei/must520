@@ -234,13 +234,12 @@ export default {
   data() {
     return {
       swiperOption: {
-        loopedSlides: 2,
+        loopedSlides: 5,
         loop: true,
         autoplay: {
           stopOnLastSlide: false,
           delay: 1000
         },
-        loopedSlides: 2,
         slidesPerView: 5,
       },
       carousel: [

@@ -71,7 +71,7 @@
                 v-for="(comment , index) of  coursecomment.slice(0, 4)"
                 :key="comment.id"
               >
-                <nuxt-link :to="`/courseList/comment/${comment.id}`">
+                <nuxt-link :to="`/courselist/comment/${comment.id}`">
                   <div class="photo">
                     <img :src="comment.cover" alt="">
                   </div>
@@ -188,7 +188,7 @@ export default {
     },
     handleNodeClick(data) {
       if (data.video_name) {
-        this.$router.push(`/courseList/watch/${data.id}`);
+        this.$router.push(`/courselist/watch/${data.id}`);
       }
     },
     // 点赞

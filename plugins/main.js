@@ -8,16 +8,6 @@ Vue.component(Icon.name, Icon)
 Vue.component(Button.name, Button)
 Vue.filter('formatDate', utils.formatDate)
 
-// vue-awesome-swiper 
-if (process.browser) {
-  require('swiper/dist/css/swiper.css')
-  const VueAwesomeSwiper = require('vue-awesome-swiper/dist/ssr')
-  Vue.use(VueAwesomeSwiper)
-  // require('video.js/dist/video-js.css')
-  // const VueVideoPlayer = require('vue-video-player/dist/ssr')
-  // Vue.use(VueVideoPlayer)
-  window.utils = utils
-}
 // 工具函数
 Vue.prototype.$utils = utils
 

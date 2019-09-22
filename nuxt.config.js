@@ -20,18 +20,20 @@ module.exports = {
   */
   loading: { color: '#fff' },
   /*
-  ** Global CSS
-  */
-  css: [
-    '~assets/css/reset.css',
-    'element-ui/lib/theme-chalk/index.css'
-  ],
-  /*
   ** Plugins to load before mounting the App
   */
   plugins: [
     '@/plugins/main',
-    { src: "@/plugins/element-ui", ssr: true }
+    { src: "@/plugins/element-ui", ssr: true },
+    { src: '@/plugins/video-player', ssr: false }
+  ],
+  /*
+  ** Global CSS
+  */
+  css: [
+    '~assets/css/reset.css',
+    'element-ui/lib/theme-chalk/index.css',
+    'video.js/dist/video-js.css'
   ],
   /*
   ** Nuxt.js dev-modules

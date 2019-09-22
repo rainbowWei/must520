@@ -117,3 +117,13 @@ export const formatDate = (time, fmt) => {
 function padLeftZero (str) {
   return ('00' + str).substr(str.length);
 };
+
+/**
+ * 取图片绝对路径
+ * description 由于需要图文分离，故而设置此绝对路径方式
+ * @param {string} path 图片相对路径
+ */
+export const imgUrl = (path) => {
+  const IS_DEV = process.env.NODE_ENV === 'development'
+  return IS_DEV ? require(`../assets/img${path}`) : `http://img.mobro.site/must-website${path}`
+}

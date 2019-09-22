@@ -3,7 +3,8 @@
     <div class="watch-video">
       <div class="video">
         <div class="video-con">
-          <video :src="coursewatch.video_addr" controls="controls" autoplay></video>
+          <!-- <video :src="coursewatch.video_addr" controls="controls" autoplay></video> -->
+          <r-video-player :videoSource="coursewatch" />
         </div>
         <div class="video-btn" @click="showHide"></div>
         <div class="video-catalogue" ref="catalogue">
@@ -28,8 +29,7 @@
     <div class="watch-comment">
       <div class="comment">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="评论列表" name="first">
-            评论列表
+          <el-tab-pane label="评论列表" name="first">评论列表
             <div class="form">
               <el-form>
                 <el-form-item>
@@ -42,7 +42,7 @@
               </div>
               <div class="login-reg">
                 <span>你需要登录后才可以评论</span>
-                <a href="javascript">登录</a> |
+                <a href="javascript">登录</a>|
                 <a href="javascript">注册</a>
               </div>
             </div>
@@ -50,7 +50,7 @@
               <li>
                 <div class="list-con">
                   <div class="L_imag_head">
-                    <img src alt />
+                    <img src="" alt="">
                   </div>
                   <div class="L_coment_box">
                     <div class="artical">
@@ -67,7 +67,7 @@
               <li>
                 <div class="list-con">
                   <div class="L_imag_head">
-                    <img src alt />
+                    <img src="" alt="">
                   </div>
                   <div class="L_coment_box">
                     <div class="artical">
@@ -92,15 +92,19 @@
 </template>
 <script>
 import { getCourseWatch, getCommentAnswer } from "@/api/course/course";
+import VideoPlayer from './VideoPlayer'
 export default {
+  components: {
+    RVideoPlayer: VideoPlayer
+  },
   data() {
     return {
       chapterlist: [], //课程目录
       courseid: "",
-      coursewatch: [], //视频资源
+      coursewatch: {}, //视频资源
       commentanswer: [], //评论回复带分页
       activeName: "first",
-      value1: null
+      value1: null,
     };
   },
   created() {
@@ -133,7 +137,8 @@ export default {
 
       //获取播放地址
       getCourseWatch({ id: str }).then(res => {
-        this.coursewatch = res.data;
+        console.log(res.data, '==========')
+        this.coursewatch = { ...res.data, learn_time: 300};
       });
     },
     getCommentAnswer() {
@@ -186,13 +191,6 @@ export default {
   .video-con {
     width: 100%;
     height: 100%;
-    video {
-      width: 100%;
-      height: 100%;
-    }
-    video::-internal-media-controls-download-button {
-      display: none;
-    }
   }
   .video-btn {
     position: absolute;
@@ -288,7 +286,7 @@ export default {
         height: 170px;
         border-bottom: 1px solid #c6c6c6;
       }
-      .list-con{
+      .list-con {
         width: 900px;
         margin: 0 auto;
       }

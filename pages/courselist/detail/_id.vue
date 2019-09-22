@@ -98,6 +98,22 @@ import {
   getCourseComment,
   getCommentPraise
 } from "@/api/course/course";
+
+// 学习状态
+const learnStatus = [
+  {
+    cls: "el-icon-warning course-catalog-control-unlearn",
+    status: "未开始"
+  },
+  {
+    cls: "el-icon-upload course-catalog-control-learning",
+    status: "学习中"
+  },
+  {
+    cls: "el-icon-success course-catalog-control-learned",
+    status: "已学习"
+  }
+];
 export default {
   data() {
     return {
@@ -123,14 +139,24 @@ export default {
       if (data.chapter_name) {
         return <div>{data.label}</div>;
       } else {
+        const statusKey =
+          !data.learn_time
+            ? 0
+            : data.learn_time > 0 && data.learn_time < data.video_time
+              ? 1
+              : 2;
+
         return (
           <div class="course-catalog">
             <p class="course-catalog-name">{data.label}</p>
             <p class="course-catalog-control">
               <span>{this.$utils.SecondToDate(data.video_time)}</span>
               <span>
-                {"学习中"}
-                <el-icon class="el-icon-success course-catalog-control-learning course-catalog-control-status" />
+                {learnStatus[statusKey].status}
+                {h('el-icon', {
+                  class: learnStatus[statusKey].cls + ' course-catalog-control-status'
+                  })
+                }
               </span>
             </p>
           </div>
@@ -165,6 +191,7 @@ export default {
         this.$router.push(`/courseList/watch/${data.id}`);
       }
     },
+    // 点赞
     toggleLink(id, index) {
       getCommentPraise({ commentid: id }).then(res => {
         if (res.code === 200) {
